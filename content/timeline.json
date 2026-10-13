@@ -1,0 +1,23 @@
+[
+  {
+    "id": "placeholder-1",
+    "date": null,
+    "title": "Placeholder milestone — the first camera",
+    "description": "Placeholder. Replace with a real, dated milestone supplied by the owner.",
+    "placeholder": true
+  },
+  {
+    "id": "placeholder-2",
+    "date": null,
+    "title": "Placeholder milestone — Keep Smiling Visuals is founded",
+    "description": "Placeholder. Add the real founding date and story.",
+    "placeholder": true
+  },
+  {
+    "id": "placeholder-3",
+    "date": null,
+    "title": "Placeholder milestone — a project worth remembering",
+    "description": "Placeholder. Link this entry to a project once real projects exist.",
+    "placeholder": true
+  }
+]
