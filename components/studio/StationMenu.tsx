@@ -36,7 +36,7 @@ export function StationMenu() {
             setGuide({ open: true, mode: "greeting" });
           }}
         >
-          Talk to the guide
+          Say hello to the founder
         </button>
         <Link className="btn btn-ghost" href="/projects">
           View without 3D

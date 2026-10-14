@@ -1,7 +1,7 @@
 "use client";
 
 import { useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { RoundedBox, useTexture } from "@react-three/drei";
 import { Suspense, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { PROPS, HALF_PI } from "@/game/layout";
@@ -9,28 +9,34 @@ import { useStudio } from "@/game/store";
 import type { Station } from "@/game/types";
 import type { Print, SiteSettings, TimelineItem } from "@/schemas/content";
 import { Hotspot } from "./Hotspot";
-import { materials } from "./materials";
+import { Ink } from "./look";
+import { materials, toon, toonRamp } from "./materials";
 import { labelTexture, screenTexture } from "./textures";
 
 function useStation(id: string): Station | undefined {
   return useStudio((s) => s.stations.find((x) => x.id === id));
 }
 
-/** Small reusable primitives */
-function Box({ args, position, mat, rotation, cast = true }: { args: [number, number, number]; position: [number, number, number]; mat: THREE.Material; rotation?: [number, number, number]; cast?: boolean }) {
+/**
+ * Small reusable primitives in the studio's game style: softly rounded
+ * edges and an ink outline (outlines switch off on the low quality tier).
+ */
+function Box({ args, position, mat, rotation, cast = true, ink = true }: { args: [number, number, number]; position: [number, number, number]; mat: THREE.Material; rotation?: [number, number, number]; cast?: boolean; ink?: boolean }) {
+  const radius = Math.min(0.035, Math.min(...args) * 0.45);
   return (
-    <mesh position={position} rotation={rotation} castShadow={cast} receiveShadow>
-      <boxGeometry args={args} />
+    <RoundedBox args={args} radius={radius} smoothness={2} position={position} rotation={rotation} castShadow={cast} receiveShadow>
       <primitive object={mat} attach="material" />
-    </mesh>
+      {ink && <Ink />}
+    </RoundedBox>
   );
 }
 
-function Cyl({ args, position, mat, rotation }: { args: [number, number, number, number?]; position: [number, number, number]; mat: THREE.Material; rotation?: [number, number, number] }) {
+function Cyl({ args, position, mat, rotation, ink = true }: { args: [number, number, number, number?]; position: [number, number, number]; mat: THREE.Material; rotation?: [number, number, number]; ink?: boolean }) {
   return (
     <mesh position={position} rotation={rotation} castShadow receiveShadow>
       <cylinderGeometry args={[args[0], args[1], args[2], args[3] ?? 24]} />
       <primitive object={mat} attach="material" />
+      {ink && <Ink />}
     </mesh>
   );
 }
@@ -56,6 +62,7 @@ function Plant({ x, z, scale = 1 }: { x: number; z: number; scale?: number }) {
         <mesh key={i} position={l.p} scale={[l.s, l.s * 0.6, l.s]} castShadow>
           <sphereGeometry args={[1, 10, 8]} />
           <primitive object={l.dark ? m.leafDark : m.leaf} attach="material" />
+          <Ink thickness={0.1} />
         </mesh>
       ))}
     </group>
@@ -180,7 +187,7 @@ function GalleryFrame({ print, index }: { print: Print; index: number }) {
         </mesh>
         <mesh position={[0, 0, 0.006]}>
           <planeGeometry args={[w - 0.06, h - 0.06]} />
-          <meshStandardMaterial map={tex} roughness={0.6} />
+          <meshToonMaterial gradientMap={toonRamp()} map={tex} />
         </mesh>
         {/* picture light */}
         <Box args={[0.5, 0.04, 0.06]} position={[0, h / 2 + 0.16, 0.08]} mat={m.brass} />
@@ -204,7 +211,7 @@ function Gallery({ prints, lights }: { prints: Print[]; lights: boolean }) {
         <planeGeometry args={[1.6, 0.5]} />
         <meshBasicMaterial map={sign} transparent toneMapped={false} />
       </mesh>
-      {lights && <pointLight position={[10.6, 3.2, (first.z + last.z) / 2]} intensity={6} distance={8} decay={2} color="#ffe0b0" />}
+      {lights && <pointLight position={[9.8, 3.4, (first.z + last.z) / 2]} intensity={3} distance={8} decay={2} color="#ffe0b0" />}
     </group>
   );
 }
@@ -241,11 +248,11 @@ function Noticeboard({ notes }: { notes: string[] }) {
             <group key={i} position={[x, y, 0.01]} rotation-z={r}>
               <mesh>
                 <planeGeometry args={[0.42, 0.42]} />
-                <meshStandardMaterial map={t} roughness={0.9} />
+                <meshToonMaterial gradientMap={toonRamp()} map={t} />
               </mesh>
               <mesh position={[0, 0.16, 0.01]}>
                 <sphereGeometry args={[0.018, 8, 8]} />
-                <meshStandardMaterial color="#c0392b" />
+                <meshToonMaterial gradientMap={toonRamp()} color="#c0392b" />
               </mesh>
             </group>
           );
@@ -268,7 +275,7 @@ function ReadingLounge({ lights }: { lights: boolean }) {
   const a = PROPS.armchair;
   const t = PROPS.sideTable;
   const sh = PROPS.bookshelf;
-  const bookMats = useMemo(() => BOOK_COLORS.map((c) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.8 })), []);
+  const bookMats = useMemo(() => BOOK_COLORS.map((c) => toon(c)), []);
   const shelfBooks = useMemo(() => {
     const out: { x: number; y: number; w: number; h: number; c: number }[] = [];
     let seed = 3;
@@ -330,7 +337,7 @@ function ReadingLounge({ lights }: { lights: boolean }) {
           ))}
           <mesh position={[0.12, 0.6, -0.12]}>
             <cylinderGeometry args={[0.04, 0.035, 0.09, 16]} />
-            <meshStandardMaterial color="#efe6d4" roughness={0.4} />
+            <meshToonMaterial gradientMap={toonRamp()} color="#efe6d4" />
           </mesh>
         </group>
       </Hotspot>
@@ -482,7 +489,7 @@ function Telephone() {
   const st = useStation("telephone");
   const m = materials();
   const t = PROPS.phoneTable;
-  const phoneMat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#8c2f23", roughness: 0.35 }), []);
+  const phoneMat = useMemo(() => toon("#8c2f23"), []);
   return (
     <Hotspot station={st}>
       <group position={[t.x, 0, t.z]}>
@@ -546,7 +553,7 @@ function Clapperboard({ enabled }: { enabled: boolean }) {
         <group position={[0, 0.52, 0.05]} rotation-x={-0.35}>
           <mesh position={[0, 0.1, 0]} castShadow>
             <boxGeometry args={[0.32, 0.22, 0.015]} />
-            <meshStandardMaterial map={stripes} roughness={0.6} />
+            <meshToonMaterial gradientMap={toonRamp()} map={stripes} />
           </mesh>
           <group ref={arm} position={[-0.16, 0.22, 0]}>
             <Box args={[0.32, 0.04, 0.016]} position={[0.16, 0.02, 0]} mat={m.black} />
@@ -570,7 +577,7 @@ function Polaroid({ enabled }: { enabled: boolean }) {
         </mesh>
         <mesh position={[0, 0.015, 0.001]}>
           <planeGeometry args={[0.13, 0.13]} />
-          <meshStandardMaterial color="#6d5a40" roughness={0.6} />
+          <meshToonMaterial gradientMap={toonRamp()} color="#6d5a40" />
         </mesh>
       </group>
     </Hotspot>

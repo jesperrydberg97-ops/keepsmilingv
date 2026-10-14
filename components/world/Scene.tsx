@@ -1,13 +1,16 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { AdaptiveDpr, Environment, Lightformer, PerformanceMonitor, useProgress } from "@react-three/drei";
+import { AdaptiveDpr, PerformanceMonitor, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 import { QUALITY_PRESETS, type QualityTier } from "@/game/quality";
 import { useStudio } from "@/game/store";
 import type { Print, SiteSettings, TimelineItem } from "@/schemas/content";
 import { CameraRig } from "./CameraRig";
+import { FirstPersonArms } from "./FirstPersonArms";
+import { Ambience, PostFx, StationMarkers } from "./GameFx";
+import { LookContext } from "./look";
 import { Guide } from "./Guide";
 import { Player } from "./Player";
 import { Room } from "./Room";
@@ -39,7 +42,7 @@ export default function Scene({ quality, prints, settings, timeline, notes, guid
       shadows={preset.shadows ? "soft" : false}
       dpr={dpr}
       gl={{ antialias: preset.antialias, powerPreference: "high-performance", preserveDrawingBuffer: false }}
-      camera={{ fov: 50, near: 0.1, far: 60, position: [0, 3, 12] }}
+      camera={{ fov: 70, near: 0.05, far: 60, position: [0, 1.6, 8] }}
       style={{ touchAction: "none" }}
       aria-label="Interactive 3D studio. Use the Stations menu for an accessible list of everything in the studio."
       role="img"
@@ -64,14 +67,20 @@ export default function Scene({ quality, prints, settings, timeline, notes, guid
       />
       <AdaptiveDpr pixelated={false} />
       <Lighting quality={quality} />
+      <LookContext.Provider value={{ outlines: quality === "high" }}>
       <Suspense fallback={null}>
         <Room />
         <Stations prints={prints} settings={settings} timeline={timeline} notes={notes} practicalLights={preset.practicalLights} />
         {settings.features.welcomeGuide && <Guide name={guideName} />}
         <Player />
+        <StationMarkers />
+        <Ambience high={quality === "high"} />
         <ReadySignal onReady={onReady} />
       </Suspense>
+      </LookContext.Provider>
       <CameraRig />
+      <FirstPersonArms />
+      <PostFx high={quality === "high"} />
     </Canvas>
   );
 }
@@ -100,12 +109,6 @@ function Lighting({ quality }: { quality: QualityTier }) {
       />
       {/* Warm fill from the interior */}
       <pointLight position={[0, 3.8, 2]} intensity={6} distance={14} decay={1.6} color="#ffc98a" />
-      {/* Local reflections without downloading an HDRI */}
-      <Environment resolution={quality === "high" ? 256 : 64} frames={1}>
-        <Lightformer form="rect" intensity={2} color="#ffe3bd" position={[-10, 2, 0]} rotation-y={Math.PI / 2} scale={[8, 3, 1]} />
-        <Lightformer form="rect" intensity={0.6} color="#ffb870" position={[0, 4, 0]} rotation-x={Math.PI / 2} scale={[10, 10, 1]} />
-        <Lightformer form="ring" intensity={0.8} color="#f5bd70" position={[8, 2, -6]} scale={2} />
-      </Environment>
     </>
   );
 }

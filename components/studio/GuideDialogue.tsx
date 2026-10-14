@@ -125,7 +125,7 @@ export function GuideDialogue() {
         <p ref={headingRef} tabIndex={-1} className="flex items-center gap-2 text-sm font-semibold text-sage outline-none">
           <span className="inline-block h-2 w-2 rounded-full bg-sage" aria-hidden />
           {npc.guideName}
-          <span className="font-normal text-muted">· scripted guide</span>
+          <span className="font-normal text-muted">· scripted greeting</span>
         </p>
         <button className="rounded-full p-2 text-muted hover:text-paper" aria-label="Dismiss guide" onClick={close}>
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>

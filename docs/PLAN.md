@@ -6,6 +6,12 @@ Living document. Status of each item is tracked in [`TODO.md`](./TODO.md).
 
 ## 1. Creative direction
 
+> **Update (owner direction):** the studio is now explored in **first person** (only the visitor's
+> arms are visible; third person remains a setting), the **founder greets visitors in person at
+> the rug**, and the art direction moved from semi-realistic to a **stylised "cosy video game"
+> look**: cel shading, ink outlines, rounded props, floating station markers, bloom and light motes.
+> The original direction below still describes the layout, mood and palette.
+
 **"Golden hour in a working loft."** You arrive at the end of a shoot day: warm low sun through
 steel-framed windows on the west wall, practical lamps already on, a projector throwing the showreel
 onto the back wall. The space is lived-in rather than staged: books stacked by the armchair, a
@@ -37,7 +43,8 @@ clapperboard on a crate, a cinema camera still on its tripod, notes pinned to a 
   daylight                      │ circulation │       on tripod    ║frame│
          │                      └─────────────┘                          │
          │                                                               │
-         │          guide ☺   ◉ spawn        [BOOKING DESK]               │
+         │              ☺ founder (front edge of rug)                    │
+         │                    ◉ spawn        [BOOKING DESK]               │
          │                                    laptop · lamp               │
          │ plant  polaroid*   [ABOUT BOARD]   ▭ door ▭        ☎ PHONE    │
          └──────────────────────────────────────────────────────────┘

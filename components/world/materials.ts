@@ -1,41 +1,60 @@
 import * as THREE from "three";
-import { plasterTexture, woodFloorTexture } from "./textures";
+import { woodFloorTexture } from "./textures";
 
 /**
- * Shared PBR materials. Created lazily on the client and reused across meshes
- * to keep draw-call state changes and GPU memory low.
+ * Stylised "video game" materials: cel-shaded toon materials sharing one
+ * stepped light ramp, saturated warm colours, and emissive accents that the
+ * bloom pass picks up. Created lazily on the client and shared across meshes.
  */
+
+let ramp: THREE.DataTexture | null = null;
+
+/** 4-step light ramp: deep shadow, shadow, lit, highlight. */
+export function toonRamp(): THREE.DataTexture {
+  if (ramp) return ramp;
+  const steps = [70, 135, 205, 255];
+  const data = new Uint8Array(steps.length * 4);
+  steps.forEach((v, i) => data.set([v, v, v, 255], i * 4));
+  ramp = new THREE.DataTexture(data, steps.length, 1, THREE.RGBAFormat);
+  ramp.minFilter = THREE.NearestFilter;
+  ramp.magFilter = THREE.NearestFilter;
+  ramp.generateMipmaps = false;
+  ramp.needsUpdate = true;
+  return ramp;
+}
+
+export function toon(color: THREE.ColorRepresentation, opts: Omit<THREE.MeshToonMaterialParameters, "color" | "gradientMap"> = {}) {
+  return new THREE.MeshToonMaterial({ color, gradientMap: toonRamp(), ...opts });
+}
+
 let mats: ReturnType<typeof create> | null = null;
 
 function create() {
-  const plaster = plasterTexture(512);
-  const wallMap = plaster.clone();
-  wallMap.repeat.set(4, 1);
-  wallMap.needsUpdate = true;
   const floorMap = woodFloorTexture(1024);
   floorMap.repeat.set(6, 4.5);
   return {
-    floor: new THREE.MeshStandardMaterial({ map: floorMap, roughness: 0.62, metalness: 0.02 }),
-    wall: new THREE.MeshStandardMaterial({ map: wallMap, color: "#d9ccb8", roughness: 0.95 }),
-    ceiling: new THREE.MeshStandardMaterial({ color: "#2a241d", roughness: 1 }),
-    darkWood: new THREE.MeshStandardMaterial({ color: "#3b2617", roughness: 0.55 }),
-    warmWood: new THREE.MeshStandardMaterial({ color: "#8a5a35", roughness: 0.5 }),
-    oak: new THREE.MeshStandardMaterial({ color: "#b07f4f", roughness: 0.55 }),
-    metal: new THREE.MeshStandardMaterial({ color: "#26231f", roughness: 0.42, metalness: 0.85 }),
-    brass: new THREE.MeshStandardMaterial({ color: "#b48a4a", roughness: 0.3, metalness: 1 }),
-    leather: new THREE.MeshStandardMaterial({ color: "#6e3f25", roughness: 0.48 }),
-    fabric: new THREE.MeshStandardMaterial({ color: "#56604f", roughness: 0.95 }),
-    fabricWarm: new THREE.MeshStandardMaterial({ color: "#a2795a", roughness: 0.95 }),
-    cork: new THREE.MeshStandardMaterial({ color: "#a47a4c", roughness: 1 }),
-    paper: new THREE.MeshStandardMaterial({ color: "#efe6d4", roughness: 0.9 }),
-    black: new THREE.MeshStandardMaterial({ color: "#0d0c0b", roughness: 0.35, metalness: 0.2 }),
-    glass: new THREE.MeshStandardMaterial({ color: "#1b1d1f", roughness: 0.08, metalness: 0.4, transparent: true, opacity: 0.55 }),
-    daylight: new THREE.MeshBasicMaterial({ color: "#fff3dc", toneMapped: false }),
-    leaf: new THREE.MeshStandardMaterial({ color: "#4a6b3f", roughness: 0.7 }),
-    leafDark: new THREE.MeshStandardMaterial({ color: "#35522f", roughness: 0.7 }),
-    terracotta: new THREE.MeshStandardMaterial({ color: "#9b5a3c", roughness: 0.85 }),
-    lampShade: new THREE.MeshStandardMaterial({ color: "#f6dcae", emissive: "#f0b462", emissiveIntensity: 1.4, roughness: 0.8 }),
-    amberGlow: new THREE.MeshBasicMaterial({ color: "#f5bd70", toneMapped: false }),
+    floor: toon("#e9b98a", { map: floorMap }),
+    // Flat, clean plaster reads better than noisy texture under cel shading.
+    wall: toon("#efd2ae"),
+    ceiling: toon("#3a2a22"),
+    darkWood: toon("#5a3420"),
+    warmWood: toon("#b5703c"),
+    oak: toon("#d39a5c"),
+    metal: toon("#3b3a44"),
+    brass: toon("#e2b257", { emissive: "#3a2508" }),
+    leather: toon("#a2512c"),
+    fabric: toon("#4f7a6a"),
+    fabricWarm: toon("#d9884e"),
+    cork: toon("#c98f55"),
+    paper: toon("#fff3dc"),
+    black: toon("#1d1b22"),
+    glass: new THREE.MeshBasicMaterial({ color: "#1b1d1f", transparent: true, opacity: 0.55 }),
+    daylight: new THREE.MeshBasicMaterial({ color: "#fff1d0", toneMapped: false }),
+    leaf: toon("#58a04a"),
+    leafDark: toon("#2f7a45"),
+    terracotta: toon("#d0663e"),
+    lampShade: toon("#ffe2a8", { emissive: "#ffb347", emissiveIntensity: 0.9 }),
+    amberGlow: new THREE.MeshBasicMaterial({ color: "#ffc46b", toneMapped: false }),
   };
 }
 
@@ -43,3 +62,6 @@ export function materials() {
   mats ??= create();
   return mats;
 }
+
+/** Colour used for the cartoon outlines around props. */
+export const OUTLINE_COLOR = "#1a0f08";

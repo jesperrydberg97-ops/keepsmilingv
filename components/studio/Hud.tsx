@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { interact } from "@/game/actions";
 import { useStudio } from "@/game/store";
-import { PLAYER_AVATAR } from "@/lib/config/avatars";
+import { HOST_AVATAR } from "@/lib/config/avatars";
 import { track } from "@/lib/analytics";
 import { GuideDialogue } from "./GuideDialogue";
 import { Joystick } from "./Joystick";
@@ -83,7 +83,7 @@ export function Hud({ showHint }: { showHint: boolean }) {
           <Link href="/projects" className="display whitespace-nowrap text-lg text-paper sm:text-2xl" aria-label="Keep Smiling Visuals — view the regular website">
             Keep Smiling <em className="text-amber">Visuals</em>
           </Link>
-          {!PLAYER_AVATAR.url && <p className="hidden font-mono text-[0.62rem] sm:block uppercase tracking-widest text-muted">Avatar: placeholder</p>}
+          {!HOST_AVATAR.url && <p className="hidden font-mono text-[0.62rem] sm:block uppercase tracking-widest text-muted">Founder model: placeholder</p>}
         </div>
         <nav aria-label="Studio" className="pointer-events-auto flex flex-wrap items-center justify-end gap-2">
           <button className="btn btn-ghost !min-h-11 text-sm" onClick={() => setMenu(true)}>

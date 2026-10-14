@@ -10,8 +10,8 @@ async function enterStudio(page: Page) {
 test.describe("3D studio", () => {
   test("welcome guide greets and can be dismissed", async ({ page }) => {
     await enterStudio(page);
-    const guide = page.getByRole("region", { name: /Studio guide says/ });
-    await expect(guide).toContainText("Welcome to Keep Smiling Visuals");
+    const guide = page.getByRole("region", { name: /KSV founder says/ });
+    await expect(guide).toContainText("welcome to Keep Smiling Visuals");
     await guide.getByRole("button", { name: "Explore freely" }).click();
     await expect(guide).toHaveCount(0);
   });

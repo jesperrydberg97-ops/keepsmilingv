@@ -4,8 +4,9 @@ An explorable, game-like studio website for **Keep Smiling Visuals** (film, phot
 storytelling — Gothenburg). Visitors walk a founder avatar around a warm loft and interact with
 physical objects: the **booking desk** (project inquiry), **project TV** (portfolio), **gallery wall**
 (prints), **noticeboard** (about), **reading lounge** (journal), **showreel wall**, **music corner**
-(Free Music Plug), **timeline shelf** and **telephone** (contact). A separate scripted **welcome guide**
-greets visitors at the entrance.
+(Free Music Plug), **timeline shelf** and **telephone** (contact). Visitors explore in first person,
+and the **founder** greets them at the rug with a scripted welcome. The look is a stylised,
+cel-shaded "cosy video game".
 
 Everything is also available as normal, accessible, indexable pages — the 3D studio is never required.
 
@@ -39,9 +40,10 @@ offers a pre-filled email instead. It never pretends to have sent anything.
 
 ## Controls
 
-WASD / ↑↓ move · ←→ rotate camera · Shift sprint · click/tap floor to walk · drag to look · wheel/pinch
-to zoom · **E**/Enter or click/tap an object to interact · Esc / Back closes panels · **Stations** menu
-for instant travel. Touch devices get a joystick and an Interact button.
+First person by default (third person in Settings). WASD / ↑↓ move · ←→ turn · Shift sprint ·
+click/tap floor to walk · drag to look · **E**/Enter or click/tap an object to interact · Esc / Back
+closes panels · **Stations** menu for instant travel. Touch devices get a joystick and an Interact
+button. Wheel/pinch zooms in third person.
 
 ## Editing content (until the CMS is connected)
 

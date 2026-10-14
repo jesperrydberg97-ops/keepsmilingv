@@ -5,7 +5,8 @@ import { sfx } from "./audio";
 import { isWithinReach } from "./interaction";
 import { PLAYER_RADIUS, STUDIO_LAYOUT } from "./layout";
 import { buildNavGrid, findPath, type NavGrid } from "./pathfinding";
-import { runtime, teleport } from "./runtime";
+import { FIRST_PERSON, lookAtAngles } from "./camera";
+import { FP_DEFAULT_PITCH, runtime, teleport } from "./runtime";
 import { useStudio } from "./store";
 import type { Station, Vec2 } from "./types";
 
@@ -37,8 +38,12 @@ export function interact(station: Station) {
   runtime.path = null;
   runtime.pendingStationId = null;
   runtime.lastInteractAt = performance.now() / 1000;
-  // Face the prop.
+  // Face the prop (and in first person, turn the view toward it).
   runtime.player.heading = Math.atan2(station.position.x - runtime.player.position.x, station.position.z - runtime.player.position.z);
+  if (useStudio.getState().settings.cameraMode === "first") {
+    const p = runtime.player.position;
+    runtime.turnTo = lookAtAngles([p.x, FIRST_PERSON.eyeHeight, p.z], [station.position.x, station.height, station.position.z]);
+  }
   const a = station.action;
   if (a.kind === "npc") {
     st.setGuide({ open: true, mode: "greeting" });
@@ -98,7 +103,10 @@ export function fastTravel(station: Station, open = true) {
 export function arrive() {
   const id = runtime.pendingStationId;
   runtime.pendingStationId = null;
-  if (runtime.pathEndHeading !== null) runtime.player.heading = runtime.pathEndHeading;
+  if (runtime.pathEndHeading !== null) {
+    runtime.player.heading = runtime.pathEndHeading;
+    runtime.turnTo = { yaw: runtime.pathEndHeading, pitch: FP_DEFAULT_PITCH };
+  }
   runtime.pathEndHeading = null;
   runtime.autoSprint = false;
   if (!id) return;

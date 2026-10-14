@@ -40,6 +40,14 @@ Legend: ✅ implemented & verified · 🟡 implemented, needs credentials / real
 - [x] Scripted welcome guide: greeting, 4 options, guided tour, skip / don't greet again
 - [x] Easter eggs: shutter flash, clapper animation, hidden polaroid (configurable)
 
+## Owner-directed update (first person, founder host, game look) ✅
+- [x] First-person camera with arms viewmodel (drag/swipe to look, ←/→ to turn, head bob, eased turn toward used objects); third person kept as a setting
+- [x] Founder stands at the front edge of the rug, turns to face visitors, waves while greeting; `HOST_AVATAR` slot for `founder.glb` (Idle/Wave/Talk clips)
+- [x] Stylised game look: toon materials + shared light ramp, ink outlines and rounded props (high tier), floating station markers, light motes, bloom + vignette (high tier)
+- [x] Personal-space collider so the first-person camera can't clip into the founder (unit-tested)
+- [ ] 🔒 Founder model + name + approved greeting (see OWNER_CHECKLIST.md §1)
+- [ ] 🔒 Style references to fine-tune the look (OWNER_CHECKLIST.md §3)
+
 ## Phase 3 — Art pass ⏳
 - [ ] Authored studio GLB with baked lightmaps, KTX2, atlases
 - [ ] Replace procedural textures; refine lighting; subtle ambient animation pass

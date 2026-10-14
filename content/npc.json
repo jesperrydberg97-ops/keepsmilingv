@@ -1,23 +1,59 @@
 {
-  "guideName": "Studio guide",
-  "greeting": "Welcome to Keep Smiling Visuals. Take a look around — or I can show you the highlights.",
-  "returningGreeting": "Welcome back. Want me to point you somewhere?",
+  "guideName": "KSV founder",
+  "greeting": "Hi, welcome to Keep Smiling Visuals! Take a look around — or I can show you the highlights.",
+  "returningGreeting": "Good to see you again. Want me to point you somewhere?",
   "help": "Walk with WASD or the joystick, click or tap the floor to walk there, and press E or tap Interact near anything that glows softly. The Stations menu takes you anywhere instantly.",
   "options": [
-    { "id": "explore", "label": "Explore freely" },
-    { "id": "work", "label": "Show me the work" },
-    { "id": "book", "label": "Book a project" },
-    { "id": "tour", "label": "Take a tour" }
+    {
+      "id": "explore",
+      "label": "Explore freely"
+    },
+    {
+      "id": "work",
+      "label": "Show me the work"
+    },
+    {
+      "id": "book",
+      "label": "Book a project"
+    },
+    {
+      "id": "tour",
+      "label": "Take a tour"
+    }
   ],
   "tour": [
-    { "stationId": "booking", "text": "This is the booking desk. Planning a film? Tell us about it here — it only takes a couple of minutes." },
-    { "stationId": "showreel", "text": "The showreel wall. A quick taste of the KSV style, projected big." },
-    { "stationId": "tv", "text": "The project TV holds the full portfolio, sorted by category and searchable." },
-    { "stationId": "reading", "text": "The reading lounge. Every book here is a journal post." },
-    { "stationId": "timeline", "text": "The timeline shelf collects milestones and stories behind the work." },
-    { "stationId": "music", "text": "The music corner features Free Music Plug." },
-    { "stationId": "gallery", "text": "The gallery wall. Click a frame to see the photograph up close and request a print." },
-    { "stationId": "telephone", "text": "And the phone, for when you'd rather just get in touch. Enjoy the studio!" }
+    {
+      "stationId": "booking",
+      "text": "This is the booking desk. Planning a film? Tell us about it here — it only takes a couple of minutes."
+    },
+    {
+      "stationId": "showreel",
+      "text": "The showreel wall. A quick taste of the KSV style, projected big."
+    },
+    {
+      "stationId": "tv",
+      "text": "The project TV holds the full portfolio, sorted by category and searchable."
+    },
+    {
+      "stationId": "reading",
+      "text": "The reading lounge. Every book here is a journal post."
+    },
+    {
+      "stationId": "timeline",
+      "text": "The timeline shelf collects milestones and stories behind the work."
+    },
+    {
+      "stationId": "music",
+      "text": "The music corner features Free Music Plug."
+    },
+    {
+      "stationId": "gallery",
+      "text": "The gallery wall. Click a frame to see the photograph up close and request a print."
+    },
+    {
+      "stationId": "telephone",
+      "text": "And the phone, for when you'd rather just get in touch. Enjoy the studio!"
+    }
   ],
   "stationDescriptions": {}
 }

@@ -17,7 +17,8 @@ import type { Box, Station, StudioLayout, Vec2 } from "./types";
  * W │                    rug                   ▐▐▐ │ E
  *   │windows                              camera   │
  *   │                                              │
- *   │           Guide        Booking desk          │
+ *   │           Founder (at rug edge)              │
+ *   │                          Booking desk        │
  *   │   About board  [door]                 Phone  │
  *   └───────────────────────────────────────────┘
  *            S (entrance, z = +9)
@@ -97,7 +98,8 @@ export const PROPS = {
   clapperCrate: { x: -4.4, z: -8.3 },
   door: { x: 0, z: 8.85, w: 2.4, h: 2.8 },
   westWindows: { z0: 2, z1: 8.2 },
-  npc: { x: -2.2, z: 6.1 },
+  /** The founder greets visitors at the front edge of the rug, facing the door. */
+  npc: { x: 0, z: 2.9 },
 } as const;
 
 function wallColliders(): Box[] {
@@ -126,7 +128,9 @@ function propColliders(): Box[] {
     boxAt("phone-table", p.phoneTable.x, p.phoneTable.z, p.phoneTable.r * 2, p.phoneTable.r * 2, 0.7),
     boxAt("tripod", p.cameraTripod.x, p.cameraTripod.z, 0.6, 0.6, 1.5),
     boxAt("clapper-crate", p.clapperCrate.x, p.clapperCrate.z, 0.7, 0.5, 0.5),
-    boxAt("npc-guide", p.npc.x, p.npc.z, 0.6, 0.6, 1.8),
+    // Personal space: in first person the camera is the visitor's eyes, so keep
+    // them at a natural conversation distance from the founder.
+    boxAt("npc-guide", p.npc.x, p.npc.z, 1.1, 1.1, 1.8),
   ];
   p.poufs.forEach((q, i) => list.push(boxAt(`pouf-${i}`, q.x, q.z, 0.6, 0.6, 0.4)));
   p.speakers.forEach((q, i) => list.push(boxAt(`speaker-${i}`, q.x, q.z, 0.45, 0.4, 1.05)));
@@ -151,12 +155,12 @@ export function baseStations(): Station[] {
     {
       id: "npc-guide",
       type: "npc",
-      label: "Studio guide",
-      prompt: "Talk to the guide",
+      label: "The founder",
+      prompt: "Say hello",
       position: { x: p.npc.x, z: p.npc.z },
-      height: 1.2,
-      radius: 1.8,
-      approach: { x: p.npc.x + 1.0, z: p.npc.z + 0.6, heading: -2.1 },
+      height: 1.6,
+      radius: 2.0,
+      approach: { x: p.npc.x, z: p.npc.z + 1.3, heading: Math.PI },
       action: { kind: "npc" },
       analyticsEvent: "station_visited",
       listed: false,
@@ -183,7 +187,7 @@ export function baseStations(): Station[] {
       position: { x: -11.0, z: p.tvScreen.z },
       height: p.tvScreen.y,
       radius: 2.6,
-      approach: { x: -9.6, z: p.tvScreen.z, heading: -HALF_PI },
+      approach: { x: -9.1, z: p.tvScreen.z, heading: -HALF_PI },
       action: { kind: "panel", panel: "projects" },
       analyticsEvent: "station_visited",
       focus: { camera: [-8.6, 1.9, -0.5], target: [-11.8, 1.75, -0.5] },
@@ -323,7 +327,7 @@ export function galleryStations(prints: { slug: string; title: string }[]): Stat
       position: { x: 11.2, z: f.z },
       height: f.y,
       radius: 1.45,
-      approach: { x: 10.2, z: f.z, heading: HALF_PI },
+      approach: { x: 9.9, z: f.z, heading: HALF_PI },
       action: { kind: "panel" as const, panel: "print" as const, params: { slug: print.slug } },
       analyticsEvent: "print_viewed",
       focus: { camera: [9.4, 1.75, f.z], target: [11.8, 1.7, f.z] },

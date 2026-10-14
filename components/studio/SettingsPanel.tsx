@@ -25,6 +25,22 @@ export function SettingsPanel() {
           ))}
         </div>
       </fieldset>
+      <fieldset>
+        <legend className="field-label">Camera view</legend>
+        <div className="flex flex-wrap gap-2">
+          {(
+            [
+              ["first", "First person"],
+              ["third", "Third person"],
+            ] as const
+          ).map(([v, label]) => (
+            <label key={v} className={`cursor-pointer rounded-full border px-3 py-2 text-sm has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-amber-strong ${s.cameraMode === v ? "border-amber bg-amber/15 text-amber-strong" : "border-line-strong"}`}>
+              <input type="radio" name="cameraMode" className="sr-only" checked={s.cameraMode === v} onChange={() => update({ cameraMode: v })} />
+              {label}
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <Toggle label="Reduced motion" hint="Snappier camera, no ambient animation, instant travel." checked={s.reducedMotion} onChange={(v) => update({ reducedMotion: v })} />
       <Toggle label="Sound effects" hint="Off by default. Videos and music only play when you press play." checked={s.sound} onChange={(v) => update({ sound: v })} />
       <Toggle label="Show minimap" checked={s.showMinimap} onChange={(v) => update({ showMinimap: v })} />

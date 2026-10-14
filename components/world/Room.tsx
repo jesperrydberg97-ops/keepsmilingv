@@ -5,9 +5,10 @@ import type { ThreeEvent } from "@react-three/fiber";
 import { PROPS, STUDIO_LAYOUT } from "@/game/layout";
 import { walkTo } from "@/game/actions";
 import { inputBlocked, useStudio } from "@/game/store";
-import { materials } from "./materials";
+import { materials, toon, toonRamp } from "./materials";
 import { labelTexture, rugTexture } from "./textures";
 import { CLICK_SLOP_PX } from "./Hotspot";
+import { Ink } from "./look";
 
 const { bounds, ceilingHeight: H, wallThickness: T } = STUDIO_LAYOUT;
 const W = bounds.maxX - bounds.minX;
@@ -40,7 +41,7 @@ export function Room() {
       {/* Central rug */}
       <mesh rotation-x={-Math.PI / 2} position={[0, 0.006, 0.5]} receiveShadow raycast={() => null}>
         <planeGeometry args={[6, 4]} />
-        <meshStandardMaterial map={rug} roughness={1} />
+        <meshToonMaterial gradientMap={toonRamp()} map={rug} />
       </mesh>
 
       {/* Ceiling */}
@@ -84,6 +85,7 @@ export function Room() {
         <mesh key={x} position={[x, H - 0.18, 0]} castShadow raycast={() => null}>
           <boxGeometry args={[0.24, 0.36, D]} />
           <primitive object={m.darkWood} attach="material" />
+          <Ink />
         </mesh>
       ))}
 
@@ -92,6 +94,7 @@ export function Room() {
         <mesh key={i} position={[c.x, H / 2, c.z]} castShadow receiveShadow>
           <boxGeometry args={[0.36, H, 0.36]} />
           <primitive object={m.metal} attach="material" />
+          <Ink />
         </mesh>
       ))}
 
@@ -103,7 +106,7 @@ export function Room() {
         </mesh>
         <mesh position={[0, PROPS.door.h / 2, -0.035]} raycast={() => null}>
           <planeGeometry args={[PROPS.door.w - 0.1, PROPS.door.h - 0.1]} />
-          <meshStandardMaterial color="#c7b9a0" emissive="#f0d8ae" emissiveIntensity={0.5} roughness={0.2} />
+          <meshToonMaterial gradientMap={toonRamp()} color="#c7b9a0" emissive="#f0d8ae" emissiveIntensity={0.5} />
         </mesh>
         <mesh position={[0, PROPS.door.h + 0.55, -0.04]} rotation-y={Math.PI} raycast={() => null}>
           <planeGeometry args={[3.2, 0.4]} />

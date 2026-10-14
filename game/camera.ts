@@ -84,6 +84,29 @@ export function computeCameraPosition(
   };
 }
 
+/** First-person eye height and look limits. */
+export const FIRST_PERSON = {
+  eyeHeight: 1.62,
+  minPitch: -1.2,
+  maxPitch: 1.1,
+  /** Head-bob amplitude (m) at full walking speed; disabled for reduced motion. */
+  bob: 0.025,
+};
+
+/** Unit look vector for a first-person yaw/pitch (same yaw convention as heading). */
+export function lookDirection(yaw: number, pitch: number): [number, number, number] {
+  const cp = Math.cos(pitch);
+  return [Math.sin(yaw) * cp, Math.sin(pitch), Math.cos(yaw) * cp];
+}
+
+/** Yaw and pitch that look from an eye position toward a target point. */
+export function lookAtAngles(eye: [number, number, number], target: [number, number, number]): { yaw: number; pitch: number } {
+  const dx = target[0] - eye[0];
+  const dy = target[1] - eye[1];
+  const dz = target[2] - eye[2];
+  return { yaw: Math.atan2(dx, dz), pitch: Math.atan2(dy, Math.hypot(dx, dz)) };
+}
+
 /** Frame-rate independent exponential damping. */
 export function damp(current: number, target: number, lambda: number, dt: number): number {
   return target + (current - target) * Math.exp(-lambda * dt);

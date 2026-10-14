@@ -1,13 +1,24 @@
 # Character & asset pipeline
 
-The playable founder and the welcome guide are **separate asset slots**. Movement, collision,
-camera and interactions never depend on the mesh, so a GLB can be dropped in by editing
+The visitor explores in **first person** (only their arms are visible). The **founder** is the
+host character standing at the front edge of the rug, greeting visitors. Movement, collision,
+camera and interactions never depend on any mesh, so a GLB is dropped in by editing
 `lib/config/avatars.ts` only.
 
 | Slot | File | Config | Current |
 | --- | --- | --- | --- |
-| Playable founder | `public/models/founder-player.glb` (or CDN URL) | `PLAYER_AVATAR` | Procedural placeholder mannequin (amber beanie), HUD shows "Avatar: placeholder" |
-| Welcome guide NPC | `public/models/welcome-guide.glb` | `GUIDE_AVATAR` | Procedural placeholder (sage top, badge) + name tag |
+| Founder (host at the rug) | `public/models/founder.glb` (or CDN URL) | `HOST_AVATAR` | Cartoon placeholder (amber beanie, camera), HUD shows "Founder model: placeholder" |
+| Visitor body (third-person view only) | none needed | `VISITOR_AVATAR` | Cartoon placeholder; only seen if the visitor picks third person in Settings |
+| First-person arms | procedural (`components/world/FirstPersonArms.tsx`) | — | Stylised sleeves + mitten hands; a GLB slot can be added if a custom arms model is wanted |
+
+### Art direction: "cosy video game"
+
+Everything in the studio is cel-shaded (toon materials sharing one 4-step light ramp, see
+`components/world/materials.ts`), has dark ink outlines (`Ink`), softly rounded edges and
+saturated warm colours. Emissive accents (lamps, neon, markers) feed a light bloom pass.
+Commissioned or bought models should match this: **stylised, chunky proportions, flat/painted
+colours, no photoreal textures**. Supply base colour textures only (lighting comes from the scene);
+outlines are added by the engine.
 
 ## Model specification
 
@@ -29,12 +40,12 @@ camera and interactions never depend on the mesh, so a GLB can be dropped in by 
 
 | State | Default clip name | Notes |
 | --- | --- | --- |
-| idle | `Idle` | Loop, subtle breathing. |
-| walk | `Walk` | Loop; authored at ≈ 1.4 m/s (`walkClipSpeed`). Playback rate is matched to actual speed. |
-| run | `Run` | Loop; authored at ≈ 4 m/s (`runClipSpeed`). Used when sprinting. |
-| interact | `Interact` | One-shot reach/press gesture (founder). Optional. |
-| wave | `Wave` | One-shot greeting (guide). Optional. |
-| turn | (optional) | Not required — heading is smoothly rotated by the controller. |
+| idle | `Idle` | **Required.** Loop, subtle breathing / weight shift. |
+| wave | `Wave` | **Required for the founder.** Loopable wave, played while greeting a visitor. |
+| talk | `Talk` | Recommended. Loop of talking gestures while the greeting dialogue is open. |
+| walk | `Walk` | Optional for the founder (they stand at the rug); authored at ≈ 1.4 m/s. |
+| run | `Run` | Optional. |
+| turn | (optional) | Not required: the founder turns smoothly to face the visitor in code. |
 
 If your clip names differ, map them in `clips` in the config. Missing clips are logged in the browser console.
 

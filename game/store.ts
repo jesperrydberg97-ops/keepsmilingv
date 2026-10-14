@@ -4,8 +4,12 @@ import { create } from "zustand";
 import type { PanelId, Station } from "./types";
 import type { QualityTier } from "./quality";
 
+export type CameraMode = "first" | "third";
+
 export interface StudioSettings {
   quality: "auto" | QualityTier;
+  /** First person (arms only) is the default; third person shows a visitor avatar. */
+  cameraMode: CameraMode;
   reducedMotion: boolean;
   /** Camera orbit sensitivity multiplier (0.4 – 2). */
   sensitivity: number;
@@ -21,6 +25,7 @@ const TUTORIAL_KEY = "ksv-studio-tutorial-seen";
 
 export const DEFAULT_SETTINGS: StudioSettings = {
   quality: "auto",
+  cameraMode: "first",
   reducedMotion: false,
   sensitivity: 1,
   sound: false,

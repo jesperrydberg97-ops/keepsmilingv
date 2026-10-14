@@ -2,6 +2,9 @@ import { CAMERA_LIMITS } from "./camera";
 import { STUDIO_LAYOUT } from "./layout";
 import type { Vec2 } from "./types";
 
+/** Slightly downward so props and the floor read well on arrival. */
+export const FP_DEFAULT_PITCH = -0.08;
+
 /**
  * Per-frame mutable game state. Kept outside React so 60 fps updates never
  * trigger re-renders; React/HUD code reads it in rAF loops when needed.
@@ -21,6 +24,10 @@ export const runtime = {
   /** Sprint the current auto-walk (used by the guided tour). */
   autoSprint: false,
   orbit: { yaw: STUDIO_LAYOUT.spawn.heading, pitch: CAMERA_LIMITS.defaultPitch, distance: CAMERA_LIMITS.defaultDistance },
+  /** First-person look pitch in radians (0 = level, positive = up). */
+  lookPitch: FP_DEFAULT_PITCH,
+  /** Smoothly turn the first-person view toward this (set when interacting). */
+  turnTo: null as null | { yaw: number; pitch: number },
   input: {
     keys: new Set<string>(),
     /** Virtual joystick: x = right, y = forward, magnitude 0..1. */
@@ -43,6 +50,9 @@ export function resetRuntime() {
   runtime.pendingStationId = null;
   runtime.autoSprint = false;
   runtime.orbit = { yaw: STUDIO_LAYOUT.spawn.heading, pitch: CAMERA_LIMITS.defaultPitch, distance: CAMERA_LIMITS.defaultDistance };
+  runtime.lookPitch = FP_DEFAULT_PITCH;
+  runtime.turnTo = null;
+  runtime.lastInteractAt = -10;
   runtime.input.keys.clear();
   runtime.input.joystick = { x: 0, y: 0 };
   runtime.focus = null;
@@ -56,5 +66,7 @@ export function teleport(p: Vec2 & { heading: number }) {
   runtime.path = null;
   runtime.pendingStationId = null;
   runtime.orbit.yaw = p.heading;
+  runtime.lookPitch = FP_DEFAULT_PITCH;
+  runtime.turnTo = null;
   runtime.snapCamera = true;
 }

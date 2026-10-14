@@ -3,7 +3,7 @@ import { buildStations, PLAYER_RADIUS, STUDIO_LAYOUT } from "@/game/layout";
 import { isBlocked, rayBox, resolveCircle } from "@/game/collision";
 import { buildNavGrid, findPath } from "@/game/pathfinding";
 import { cameraRelative, followPath, stepMovement, type MoveState } from "@/game/movement";
-import { CAMERA_LIMITS, computeCameraPosition } from "@/game/camera";
+import { CAMERA_LIMITS, computeCameraPosition, lookAtAngles, lookDirection } from "@/game/camera";
 import { nearestStation } from "@/game/interaction";
 import { boxAt } from "@/game/layout";
 
@@ -126,6 +126,17 @@ describe("camera", () => {
   });
 });
 
+describe("first-person look", () => {
+  it("look direction and lookAt angles agree", () => {
+    const { yaw, pitch } = lookAtAngles([0, 1.6, 0], [3, 2.6, -4]);
+    const d = lookDirection(yaw, pitch);
+    const len = Math.hypot(3, 1, 4);
+    expect(d[0]).toBeCloseTo(3 / len, 5);
+    expect(d[1]).toBeCloseTo(1 / len, 5);
+    expect(d[2]).toBeCloseTo(-4 / len, 5);
+  });
+});
+
 describe("interaction", () => {
   it("finds the station the avatar stands at", () => {
     for (const s of stations) {
@@ -133,7 +144,21 @@ describe("interaction", () => {
       expect(n?.id, `at ${s.id}`).toBe(s.id);
     }
   });
-  it("returns null in the middle of the room", () => {
-    expect(nearestStation({ x: 0, z: 1 }, 0, stations)).toBeNull();
+  it("returns null in open floor space", () => {
+    expect(nearestStation({ x: 2, z: -1 }, 0, stations)).toBeNull();
+  });
+  it("the founder greets visitors at the rug, straight ahead of the entrance", () => {
+    const host = stations.find((s) => s.id === "npc-guide")!;
+    // Rug spans x ∈ [-3, 3], z ∈ [-1.5, 2.5]; the host stands at its front edge.
+    expect(Math.abs(host.position.x)).toBeLessThan(0.5);
+    expect(host.position.z).toBeGreaterThan(2.3);
+    expect(host.position.z).toBeLessThan(3.4);
+    // Walking straight into the host stops at conversation distance.
+    let s: MoveState = { position: { ...STUDIO_LAYOUT.spawn }, velocity: { x: 0, z: 0 }, heading: Math.PI };
+    for (let i = 0; i < 240; i++) s = stepMovement(s, { direction: { x: 0, z: -1 }, sprint: false }, 1 / 60, STUDIO_LAYOUT.colliders, PLAYER_RADIUS);
+    expect(s.position.z - host.position.z).toBeGreaterThan(0.85);
+    // Visible but not in your face at spawn: outside interaction range.
+    const d = Math.hypot(host.position.x - STUDIO_LAYOUT.spawn.x, host.position.z - STUDIO_LAYOUT.spawn.z);
+    expect(d).toBeGreaterThan(host.radius);
   });
 });
