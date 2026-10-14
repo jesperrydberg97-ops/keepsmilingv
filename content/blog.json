@@ -1,0 +1,64 @@
+[
+  {
+    "slug": "placeholder-welcome-to-the-studio",
+    "title": "Placeholder — Welcome to the studio journal",
+    "excerpt": "Placeholder article showing how journal posts look. Replace with a real post from the CMS.",
+    "cover": {
+      "src": "/placeholders/blog-1.svg",
+      "alt": "Placeholder journal cover"
+    },
+    "author": "Keep Smiling Visuals",
+    "date": "2026-01-01",
+    "category": "Studio notes",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "This is placeholder text. Journal posts are written in the CMS and rendered as accessible, indexable pages — the reading lounge in the 3D studio is simply a way to discover them."
+      },
+      {
+        "type": "heading",
+        "text": "What a post can contain",
+        "level": 2
+      },
+      {
+        "type": "list",
+        "items": [
+          "Paragraphs and headings",
+          "Quotes",
+          "Images with captions",
+          "Embedded YouTube videos (loaded only when played)"
+        ]
+      },
+      {
+        "type": "quote",
+        "text": "Placeholder quote — replace with something real."
+      },
+      {
+        "type": "paragraph",
+        "text": "Replace this post before launch."
+      }
+    ],
+    "relatedProjects": [],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-field-notes",
+    "title": "Placeholder — Field notes from a shoot",
+    "excerpt": "A second placeholder post to demonstrate categories and listing layouts.",
+    "cover": {
+      "src": "/placeholders/blog-2.svg",
+      "alt": "Placeholder field notes cover"
+    },
+    "author": "Keep Smiling Visuals",
+    "date": "2026-01-02",
+    "category": "Behind the scenes",
+    "body": [
+      {
+        "type": "paragraph",
+        "text": "Placeholder body copy for a behind-the-scenes article."
+      }
+    ],
+    "relatedProjects": [],
+    "placeholder": true
+  }
+]

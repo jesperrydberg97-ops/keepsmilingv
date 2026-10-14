@@ -1,0 +1,121 @@
+[
+  {
+    "slug": "placeholder-commercials",
+    "title": "Placeholder — Commercial",
+    "category": "commercials",
+    "summary": "Placeholder entry for the commercial rail. Replace with a real project title, summary and YouTube video ID.",
+    "thumbnail": {
+      "src": "/placeholders/project-1.svg",
+      "alt": "Placeholder thumbnail for a commercial project",
+      "width": 1280,
+      "height": 720
+    },
+    "youtubeId": null,
+    "featured": true,
+    "tags": [],
+    "roles": [],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-events",
+    "title": "Placeholder — Event film",
+    "category": "events",
+    "summary": "Placeholder entry for the event film rail. Replace with a real project title, summary and YouTube video ID.",
+    "thumbnail": {
+      "src": "/placeholders/project-2.svg",
+      "alt": "Placeholder thumbnail for a event film project",
+      "width": 1280,
+      "height": 720
+    },
+    "youtubeId": null,
+    "featured": false,
+    "tags": [],
+    "roles": [],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-music-videos",
+    "title": "Placeholder — Music video",
+    "category": "music-videos",
+    "summary": "Placeholder entry for the music video rail. Replace with a real project title, summary and YouTube video ID.",
+    "thumbnail": {
+      "src": "/placeholders/project-3.svg",
+      "alt": "Placeholder thumbnail for a music video project",
+      "width": 1280,
+      "height": 720
+    },
+    "youtubeId": null,
+    "featured": false,
+    "tags": [],
+    "roles": [],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-documentaries",
+    "title": "Placeholder — Documentary",
+    "category": "documentaries",
+    "summary": "Placeholder entry for the documentary rail. Replace with a real project title, summary and YouTube video ID.",
+    "thumbnail": {
+      "src": "/placeholders/project-4.svg",
+      "alt": "Placeholder thumbnail for a documentary project",
+      "width": 1280,
+      "height": 720
+    },
+    "youtubeId": null,
+    "featured": false,
+    "tags": [],
+    "roles": [],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-padel-sports",
+    "title": "Placeholder — Sports",
+    "category": "padel-sports",
+    "summary": "Placeholder entry for the sports rail. Replace with a real project title, summary and YouTube video ID.",
+    "thumbnail": {
+      "src": "/placeholders/project-5.svg",
+      "alt": "Placeholder thumbnail for a sports project",
+      "width": 1280,
+      "height": 720
+    },
+    "youtubeId": null,
+    "featured": false,
+    "tags": [],
+    "roles": [],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-travel",
+    "title": "Placeholder — Moving postcard",
+    "category": "travel",
+    "summary": "Placeholder entry for the moving postcard rail. Replace with a real project title, summary and YouTube video ID.",
+    "thumbnail": {
+      "src": "/placeholders/project-6.svg",
+      "alt": "Placeholder thumbnail for a moving postcard project",
+      "width": 1280,
+      "height": 720
+    },
+    "youtubeId": null,
+    "featured": false,
+    "tags": [],
+    "roles": [],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-behind-the-scenes",
+    "title": "Placeholder — Behind the scenes",
+    "category": "behind-the-scenes",
+    "summary": "Placeholder entry for the behind the scenes rail. Replace with a real project title, summary and YouTube video ID.",
+    "thumbnail": {
+      "src": "/placeholders/project-7.svg",
+      "alt": "Placeholder thumbnail for a behind the scenes project",
+      "width": 1280,
+      "height": 720
+    },
+    "youtubeId": null,
+    "featured": false,
+    "tags": [],
+    "roles": [],
+    "placeholder": true
+  }
+]

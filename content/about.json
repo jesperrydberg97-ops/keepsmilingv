@@ -1,0 +1,24 @@
+{
+  "mission": "Content that creates smiles — films and photographs that make people feel something real.",
+  "founderIntro": [
+    "I'm a filmmaker from Gothenburg, and I created Keep Smiling Visuals with a simple belief: that the world is full of beauty worth capturing — in the small, quiet moments just as much as the grand ones. The smile between two people. The light through a window. The feeling of being completely present.",
+    "We're surrounded by content that tells us to buy, to want, to consume. I want to make something different. Films that don't just sell a product — they leave a mark. Work that connects a brand to something deeper than a transaction.",
+    "Every project is built around one question: will this still mean something after the screen goes dark?"
+  ],
+  "approach": [
+    { "title": "Story first", "text": "Every project starts with the feeling it should leave behind, then the shots that get there." },
+    { "title": "Movement", "text": "Camera, people and edit rhythm working together so the film feels alive." },
+    { "title": "Crafted finish", "text": "Edit, colour and sound treated with the same care as the shoot." }
+  ],
+  "services": [
+    { "title": "Commercial & brand films", "text": "Campaign and brand films for companies who want to be felt, not just seen." },
+    { "title": "Events & aftermovies", "text": "Capturing the energy of a day so people want to relive it." },
+    { "title": "Music videos", "text": "Visual worlds built around an artist's sound." },
+    { "title": "Documentary", "text": "Character-driven stories, short and long." },
+    { "title": "Social content", "text": "Platform-native edits that still look cinematic." },
+    { "title": "Photography", "text": "Portraits, products and moving postcards in still form." }
+  ],
+  "collaborations": [],
+  "noticeboardNotes": ["Keep smiling", "Story first", "Light through a window", "Be present"],
+  "placeholder": true
+}

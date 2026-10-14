@@ -1,0 +1,178 @@
+[
+  {
+    "slug": "placeholder-print-1",
+    "title": "Placeholder — Golden hour study",
+    "image": {
+      "src": "/placeholders/print-1.svg",
+      "alt": "Placeholder artwork standing in for the photograph 'Golden hour study'",
+      "width": 1500,
+      "height": 1000
+    },
+    "story": "Placeholder story. Replace with where and why this photograph was taken.",
+    "variants": [
+      {
+        "id": "s",
+        "size": "Small",
+        "widthCm": 30,
+        "heightCm": 20,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "m",
+        "size": "Medium",
+        "widthCm": 50,
+        "heightCm": 33,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "l",
+        "size": "Large",
+        "widthCm": 70,
+        "heightCm": 47,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      }
+    ],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-print-2",
+    "title": "Placeholder — Harbour morning",
+    "image": {
+      "src": "/placeholders/print-2.svg",
+      "alt": "Placeholder artwork standing in for the photograph 'Harbour morning'",
+      "width": 1500,
+      "height": 1875
+    },
+    "story": "Placeholder story. Replace with where and why this photograph was taken.",
+    "variants": [
+      {
+        "id": "s",
+        "size": "Small",
+        "widthCm": 24,
+        "heightCm": 30,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "m",
+        "size": "Medium",
+        "widthCm": 40,
+        "heightCm": 50,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "l",
+        "size": "Large",
+        "widthCm": 56,
+        "heightCm": 70,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      }
+    ],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-print-3",
+    "title": "Placeholder — Quiet street",
+    "image": {
+      "src": "/placeholders/print-3.svg",
+      "alt": "Placeholder artwork standing in for the photograph 'Quiet street'",
+      "width": 1500,
+      "height": 1000
+    },
+    "story": "Placeholder story. Replace with where and why this photograph was taken.",
+    "variants": [
+      {
+        "id": "s",
+        "size": "Small",
+        "widthCm": 30,
+        "heightCm": 20,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "m",
+        "size": "Medium",
+        "widthCm": 50,
+        "heightCm": 33,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "l",
+        "size": "Large",
+        "widthCm": 70,
+        "heightCm": 47,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      }
+    ],
+    "placeholder": true
+  },
+  {
+    "slug": "placeholder-print-4",
+    "title": "Placeholder — Coastline postcard",
+    "image": {
+      "src": "/placeholders/print-4.svg",
+      "alt": "Placeholder artwork standing in for the photograph 'Coastline postcard'",
+      "width": 1500,
+      "height": 1500
+    },
+    "story": "Placeholder story. Replace with where and why this photograph was taken.",
+    "variants": [
+      {
+        "id": "s",
+        "size": "Small",
+        "widthCm": 30,
+        "heightCm": 30,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "m",
+        "size": "Medium",
+        "widthCm": 50,
+        "heightCm": 50,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      },
+      {
+        "id": "l",
+        "size": "Large",
+        "widthCm": 70,
+        "heightCm": 70,
+        "material": "Fine-art matte paper",
+        "priceMinor": null,
+        "currency": "SEK",
+        "available": true
+      }
+    ],
+    "placeholder": true
+  }
+]
