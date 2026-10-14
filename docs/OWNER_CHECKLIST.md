@@ -9,7 +9,7 @@ Bocka av eftersom. Viktigast först inom varje avsnitt.
 
 Du står vid mattans framkant och hälsar besökare välkomna. Tills din modell finns visas en tecknad platshållare med texten "Founder model: placeholder".
 
-- [ ] **`founder.glb`**: en 3D-modell av dig, i spelstil som passar rummet (tecknad, lätt överdrivna proportioner, inte fotorealistisk). Detaljerad specifikation finns i [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md). Kort version:
+- [ ] **`founder.glb`**: en 3D-modell av dig i **semi-realistisk** stil som passar rummet (som en karaktär i ett modernt spel, inte en fotoskanning). Detaljerad specifikation finns i [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md). Kort version:
   - glTF binär (`.glb`), meter-skala (din riktiga längd), står på origo, tittar mot +Z
   - Rig med humanoid-skelett (Mixamo-kompatibelt är enklast)
   - Animationer på plats (ingen rotförflyttning): **Idle**, **Wave** (vinka), **Talk** (pratar/gestikulerar). Walk är frivillig.
@@ -28,13 +28,14 @@ Du står vid mattans framkant och hälsar besökare välkomna. Tills din modell 
 
 - [ ] Valfritt: ska armarna ha en viss **ärm- eller handskfärg**, eller hålla något (t.ex. en kamera)? I dag är det enkla tecknade armar med grön ärm.
 
-## 3. Spelstilen på rummet
+## 3. Rummet i 3D (semi-realistiskt, beslutat)
 
-Rummet har nu tecknad toon-shading, mörka konturer, rundade möbler, svävande markörer över stationerna, glöd och dammpartiklar i fönsterljuset. Jag behöver:
-- [ ] **2–5 referensbilder eller speltitlar** vars stil du gillar (t.ex. "som Animal Crossing", "som Fortnite", "som Overcooked"), så vi kan finjustera färger, konturer och proportioner
-- [ ] Säg om **någon station ska bytas, flyttas eller tas bort**, och om du vill ha fler (t.ex. en redigeringsdator, ett kamerarum)
-- [ ] Säg om **möblerna ska bytas mot riktiga 3D-modeller** (köpta eller beställda, se ASSET_PIPELINE) eller om den procedurella stilen räcker tills vidare
-- [ ] **Logga** i SVG (till skyltar och neon-skylten)
+Studion visas nu i semi-realistisk stil med riktiga material. Den slutliga, detaljerade rummodellen (`studio.glb`) byggs i Blender ovanpå blockout-filen. Allt står i [`BLENDER.md`](./BLENDER.md).
+- [ ] **Välj väg:** bygga själv i Blender, beställa av en 3D-artist (skicka `BLENDER.md` + `docs/blender/ksv-studio-blockout.glb`) eller kombinera med köpta möbelpaket
+- [ ] **3–8 referensbilder** på studior/loft du gillar (ljus, material, möbler, färger)
+- [ ] Säg om **någon station ska bytas, flyttas eller tas bort** innan modelleringen börjar. Planlösningen ändras lättast nu.
+- [ ] **Logga** i SVG (till skyltar och neon-skylten i rummet)
+- [ ] Leverera **`studio.glb` + `.blend`-filen + texturer**
 
 ## 4. Innehåll (fakta)
 

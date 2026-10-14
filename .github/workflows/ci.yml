@@ -16,6 +16,8 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
+      - name: Blender blockout is in sync with the floor plan
+        run: npm run export:blockout && git diff --exit-code docs/blender
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
         env:

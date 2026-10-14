@@ -9,8 +9,8 @@ import { useStudio } from "@/game/store";
 import type { Station } from "@/game/types";
 import type { Print, SiteSettings, TimelineItem } from "@/schemas/content";
 import { Hotspot } from "./Hotspot";
-import { Ink } from "./look";
-import { materials, toon, toonRamp } from "./materials";
+import { Ink, SurfaceMaterial } from "./look";
+import { materials, surface } from "./materials";
 import { labelTexture, screenTexture } from "./textures";
 
 function useStation(id: string): Station | undefined {
@@ -187,7 +187,7 @@ function GalleryFrame({ print, index }: { print: Print; index: number }) {
         </mesh>
         <mesh position={[0, 0, 0.006]}>
           <planeGeometry args={[w - 0.06, h - 0.06]} />
-          <meshToonMaterial gradientMap={toonRamp()} map={tex} />
+          <SurfaceMaterial map={tex} />
         </mesh>
         {/* picture light */}
         <Box args={[0.5, 0.04, 0.06]} position={[0, h / 2 + 0.16, 0.08]} mat={m.brass} />
@@ -248,11 +248,11 @@ function Noticeboard({ notes }: { notes: string[] }) {
             <group key={i} position={[x, y, 0.01]} rotation-z={r}>
               <mesh>
                 <planeGeometry args={[0.42, 0.42]} />
-                <meshToonMaterial gradientMap={toonRamp()} map={t} />
+                <SurfaceMaterial map={t} />
               </mesh>
               <mesh position={[0, 0.16, 0.01]}>
                 <sphereGeometry args={[0.018, 24, 18]} />
-                <meshToonMaterial gradientMap={toonRamp()} color="#c0392b" />
+                <SurfaceMaterial color="#c0392b" />
               </mesh>
             </group>
           );
@@ -275,7 +275,7 @@ function ReadingLounge({ lights }: { lights: boolean }) {
   const a = PROPS.armchair;
   const t = PROPS.sideTable;
   const sh = PROPS.bookshelf;
-  const bookMats = useMemo(() => BOOK_COLORS.map((c) => toon(c)), []);
+  const bookMats = useMemo(() => BOOK_COLORS.map((c) => surface(c)), []);
   const shelfBooks = useMemo(() => {
     const out: { x: number; y: number; w: number; h: number; c: number }[] = [];
     let seed = 3;
@@ -337,7 +337,7 @@ function ReadingLounge({ lights }: { lights: boolean }) {
           ))}
           <mesh position={[0.12, 0.6, -0.12]}>
             <cylinderGeometry args={[0.04, 0.035, 0.09, 48]} />
-            <meshToonMaterial gradientMap={toonRamp()} color="#efe6d4" />
+            <SurfaceMaterial color="#efe6d4" />
           </mesh>
         </group>
       </Hotspot>
@@ -489,7 +489,7 @@ function Telephone() {
   const st = useStation("telephone");
   const m = materials();
   const t = PROPS.phoneTable;
-  const phoneMat = useMemo(() => toon("#8c2f23"), []);
+  const phoneMat = useMemo(() => surface("#8c2f23"), []);
   return (
     <Hotspot station={st}>
       <group position={[t.x, 0, t.z]}>
@@ -553,7 +553,7 @@ function Clapperboard({ enabled }: { enabled: boolean }) {
         <group position={[0, 0.52, 0.05]} rotation-x={-0.35}>
           <mesh position={[0, 0.1, 0]} castShadow>
             <boxGeometry args={[0.32, 0.22, 0.015]} />
-            <meshToonMaterial gradientMap={toonRamp()} map={stripes} />
+            <SurfaceMaterial map={stripes} />
           </mesh>
           <group ref={arm} position={[-0.16, 0.22, 0]}>
             <Box args={[0.32, 0.04, 0.016]} position={[0.16, 0.02, 0]} mat={m.black} />
@@ -577,7 +577,7 @@ function Polaroid({ enabled }: { enabled: boolean }) {
         </mesh>
         <mesh position={[0, 0.015, 0.001]}>
           <planeGeometry args={[0.13, 0.13]} />
-          <meshToonMaterial gradientMap={toonRamp()} color="#6d5a40" />
+          <SurfaceMaterial color="#6d5a40" />
         </mesh>
       </group>
     </Hotspot>

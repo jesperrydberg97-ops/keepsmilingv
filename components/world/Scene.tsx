@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { PerformanceMonitor, useProgress } from "@react-three/drei";
+import { Environment, Lightformer, PerformanceMonitor, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 import { QUALITY_PRESETS, type QualityTier } from "@/game/quality";
@@ -11,6 +11,9 @@ import { CameraRig } from "./CameraRig";
 import { FirstPersonArms } from "./FirstPersonArms";
 import { Ambience, PostFx, StationMarkers } from "./GameFx";
 import { LookContext } from "./look";
+import { REALISTIC } from "./materials";
+import { StudioModel } from "./StudioModel";
+import { STUDIO_MODEL } from "@/lib/config/art";
 import { Guide } from "./Guide";
 import { Player } from "./Player";
 import { Room } from "./Room";
@@ -51,8 +54,9 @@ export default function Scene({ quality, prints, settings, timeline, notes, guid
       aria-label="Interactive 3D studio. Use the Stations menu for an accessible list of everything in the studio."
       role="img"
       onCreated={({ gl }) => {
-        gl.toneMapping = THREE.ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.0;
+        // AgX keeps natural colour in highlights (lamps, window light) for the realistic style.
+        gl.toneMapping = REALISTIC ? THREE.AgXToneMapping : THREE.ACESFilmicToneMapping;
+        gl.toneMappingExposure = REALISTIC ? 1.15 : 1.0;
         const c = gl.domElement;
         c.addEventListener("webglcontextlost", (e) => {
           e.preventDefault();
@@ -72,8 +76,15 @@ export default function Scene({ quality, prints, settings, timeline, notes, guid
       <Lighting quality={quality} />
       <LookContext.Provider value={{ outlines: preset.outlines }}>
       <Suspense fallback={null}>
-        <Room />
-        <Stations prints={prints} settings={settings} timeline={timeline} notes={notes} practicalLights={preset.practicalLights} />
+        {STUDIO_MODEL.url ? (
+          // Authored studio: replaces the procedural shell and furniture.
+          <StudioModel url={STUDIO_MODEL.url} prints={prints} />
+        ) : (
+          <>
+            <Room />
+            <Stations prints={prints} settings={settings} timeline={timeline} notes={notes} practicalLights={preset.practicalLights} />
+          </>
+        )}
         {settings.features.welcomeGuide && <Guide name={guideName} />}
         <Player />
         <StationMarkers />
@@ -113,6 +124,15 @@ function Lighting({ quality }: { quality: QualityTier }) {
       />
       {/* Warm fill from the interior */}
       <pointLight position={[0, 3.8, 2]} intensity={6} distance={14} decay={1.6} color="#ffc98a" />
+      {REALISTIC && (
+        // Soft image-based light + reflections from a tiny local "room", no HDRI download.
+        <Environment resolution={quality === "low" ? 64 : 256} frames={1} environmentIntensity={0.55}>
+          <Lightformer form="rect" intensity={3} color="#ffe6c4" position={[-10, 2.2, 5]} rotation-y={Math.PI / 2} scale={[6, 2.6, 1]} />
+          <Lightformer form="rect" intensity={0.7} color="#ffcf96" position={[0, 4.4, 0]} rotation-x={Math.PI / 2} scale={[18, 12, 1]} />
+          <Lightformer form="circle" intensity={1.5} color="#ffb860" position={[9, 1.6, -7]} scale={1.2} />
+          <Lightformer form="circle" intensity={1.5} color="#ffb860" position={[-9, 1.6, -7]} scale={1.2} />
+        </Environment>
+      )}
     </>
   );
 }

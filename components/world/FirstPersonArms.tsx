@@ -8,7 +8,7 @@ import { runtime } from "@/game/runtime";
 import { useStudio } from "@/game/store";
 import { walkCycle } from "./CameraRig";
 import { VISITOR_PALETTE } from "./Avatar";
-import { toon } from "./materials";
+import { surface } from "./materials";
 
 /**
  * First-person arms viewmodel, parented to the camera like in an FPS.
@@ -30,9 +30,9 @@ export function FirstPersonArms() {
       return { m, order };
     };
     return {
-      sleeve: overlay(toon(VISITOR_PALETTE.top), 1000),
-      cuff: overlay(toon("#2f5f52"), 1001),
-      hand: overlay(toon(VISITOR_PALETTE.skin), 1002),
+      sleeve: overlay(surface(VISITOR_PALETTE.top), 1000),
+      cuff: overlay(surface("#2f5f52"), 1001),
+      hand: overlay(surface(VISITOR_PALETTE.skin), 1002),
     };
   }, []);
 

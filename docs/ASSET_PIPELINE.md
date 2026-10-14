@@ -11,14 +11,16 @@ camera and interactions never depend on any mesh, so a GLB is dropped in by edit
 | Visitor body (third-person view only) | none needed | `VISITOR_AVATAR` | Cartoon placeholder; only seen if the visitor picks third person in Settings |
 | First-person arms | procedural (`components/world/FirstPersonArms.tsx`) | — | Stylised sleeves + mitten hands; a GLB slot can be added if a custom arms model is wanted |
 
-### Art direction: "cosy video game"
+### Art direction: semi-realistic (owner decision)
 
-Everything in the studio is cel-shaded (toon materials sharing one 4-step light ramp, see
-`components/world/materials.ts`), has dark ink outlines (`Ink`), softly rounded edges and
-saturated warm colours. Emissive accents (lamps, neon, markers) feed a light bloom pass.
-Commissioned or bought models should match this: **stylised, chunky proportions, flat/painted
-colours, no photoreal textures**. Supply base colour textures only (lighting comes from the scene);
-outlines are added by the engine.
+`lib/config/art.ts` → `ART_STYLE = "realistic"`: physically based materials (wood, plaster,
+steel, leather, fabric, brass) with roughness/metalness, soft reflections from a local environment,
+AgX tone mapping. Game-feel elements stay: floating station markers, light motes, bloom and the
+first-person arms. Characters should match: **semi-realistic game characters** (PBR textures,
+natural proportions), not photogrammetry and not cartoon. The previous cel-shaded look is still
+available as `ART_STYLE = "stylized"`.
+
+The authored room (`studio.glb`) follows [`BLENDER.md`](./BLENDER.md).
 
 ## Model specification
 

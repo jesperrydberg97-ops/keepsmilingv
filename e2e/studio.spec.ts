@@ -29,7 +29,8 @@ test.describe("3D studio", () => {
     await expect(page.getByRole("dialog")).toHaveCount(0);
 
     // Avatar now stands at the TV: the proximity prompt is shown and E interacts.
-    await expect(page.getByText("Browse projects")).toBeVisible();
+    // The prompt updates on the next rendered frames; software-rendered CI is slow.
+    await expect(page.getByText("Browse projects")).toBeVisible({ timeout: 30_000 });
     await page.keyboard.press("e");
     await expect(page.getByRole("dialog")).toContainText("Project TV");
     await page.goBack();

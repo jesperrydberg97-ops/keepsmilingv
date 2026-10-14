@@ -11,6 +11,10 @@ Living document. Status of each item is tracked in [`TODO.md`](./TODO.md).
 > the rug**, and the art direction moved from semi-realistic to a **stylised "cosy video game"
 > look**: cel shading, ink outlines, rounded props, floating station markers, bloom and light motes.
 > The original direction below still describes the layout, mood and palette.
+>
+> **Update 2:** the owner chose a **semi-realistic** art direction for the room (`ART_STYLE =
+> "realistic"`: PBR materials, reflections, AgX). The detailed room will be an authored
+> `studio.glb` built in Blender on the generated blockout (see `BLENDER.md`).
 
 **"Golden hour in a working loft."** You arrive at the end of a shoot day: warm low sun through
 steel-framed windows on the west wall, practical lamps already on, a projector throwing the showreel

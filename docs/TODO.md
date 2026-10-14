@@ -58,6 +58,12 @@ Legend: ✅ implemented & verified · 🟡 implemented, needs credentials / real
 - [x] Fixed the booking-desk laptop lid (was lying flat)
 - [ ] Verify Ultra/High frame rate on real hardware (sandbox renders on the CPU only)
 
+## Semi-realistic direction + authored studio pipeline ✅
+- [x] `ART_STYLE` switch; realistic is the default: PBR materials, plaster/wood bump, local environment reflections, AgX
+- [x] Blender blockout generated from `game/layout.ts` (`npm run export:blockout`), validated with the Khronos glTF validator; CI checks it stays in sync
+- [x] `StudioModel` loader: replaces the procedural studio when `STUDIO_MODEL.url` is set; clickable `station_*` nodes, live `screen_*` and `print_*` surfaces, Meshopt/Draco/KTX2 decoders bundled locally (verified end-to-end by loading the blockout itself)
+- [ ] 🔒 `studio.glb` from the owner/artist (docs/BLENDER.md)
+
 ## Phase 3 — Art pass ⏳
 - [ ] Authored studio GLB with baked lightmaps, KTX2, atlases
 - [ ] Replace procedural textures; refine lighting; subtle ambient animation pass

@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm run test"
+    "check": "npm run typecheck && npm run test",
+    "export:blockout": "node --experimental-strip-types --no-warnings scripts/export-blockout.ts"
   },
   "engines": {
     "node": ">=20.9"

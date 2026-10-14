@@ -5,10 +5,10 @@ import type { ThreeEvent } from "@react-three/fiber";
 import { PROPS, STUDIO_LAYOUT } from "@/game/layout";
 import { walkTo } from "@/game/actions";
 import { inputBlocked, useStudio } from "@/game/store";
-import { materials, toon, toonRamp } from "./materials";
+import { materials, surface } from "./materials";
 import { labelTexture, rugTexture } from "./textures";
 import { CLICK_SLOP_PX } from "./Hotspot";
-import { Ink } from "./look";
+import { Ink, SurfaceMaterial } from "./look";
 
 const { bounds, ceilingHeight: H, wallThickness: T } = STUDIO_LAYOUT;
 const W = bounds.maxX - bounds.minX;
@@ -41,7 +41,7 @@ export function Room() {
       {/* Central rug */}
       <mesh rotation-x={-Math.PI / 2} position={[0, 0.006, 0.5]} receiveShadow raycast={() => null}>
         <planeGeometry args={[6, 4]} />
-        <meshToonMaterial gradientMap={toonRamp()} map={rug} />
+        <SurfaceMaterial map={rug} />
       </mesh>
 
       {/* Ceiling */}
@@ -106,7 +106,7 @@ export function Room() {
         </mesh>
         <mesh position={[0, PROPS.door.h / 2, -0.035]} raycast={() => null}>
           <planeGeometry args={[PROPS.door.w - 0.1, PROPS.door.h - 0.1]} />
-          <meshToonMaterial gradientMap={toonRamp()} color="#c7b9a0" emissive="#f0d8ae" emissiveIntensity={0.5} />
+          <SurfaceMaterial color="#c7b9a0" emissive="#f0d8ae" emissiveIntensity={0.5} />
         </mesh>
         <mesh position={[0, PROPS.door.h + 0.55, -0.04]} rotation-y={Math.PI} raycast={() => null}>
           <planeGeometry args={[3.2, 0.4]} />

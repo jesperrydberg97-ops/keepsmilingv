@@ -162,3 +162,24 @@ describe("interaction", () => {
     expect(d).toBeGreaterThan(host.radius);
   });
 });
+
+describe("authored studio model node names", () => {
+  it("maps station nodes to station ids", async () => {
+    const { stationIdFromNodeName, printIndexFromNodeName } = await import("@/game/studioModel");
+    const slugs = ["a", "b"];
+    expect(stationIdFromNodeName("station_booking", slugs)).toBe("booking");
+    expect(stationIdFromNodeName("station_npc_guide.001", slugs)).toBe("npc-guide");
+    expect(stationIdFromNodeName("station_gallery_2", slugs)).toBe("print-b");
+    expect(stationIdFromNodeName("station_gallery_3", slugs)).toBeNull();
+    expect(stationIdFromNodeName("sofa", slugs)).toBeNull();
+    expect(printIndexFromNodeName("print_1")).toBe(0);
+  });
+  it("every station in the blockout export name scheme resolves back to a station", async () => {
+    const { stationIdFromNodeName } = await import("@/game/studioModel");
+    const slugs = prints.map((p) => p.slug);
+    for (const s of stations) {
+      const node = s.id.startsWith("print-") ? `station_gallery_${slugs.indexOf(s.id.slice(6)) + 1}` : `station_${s.id.replace(/-/g, "_")}`;
+      expect(stationIdFromNodeName(node, slugs)).toBe(s.id);
+    }
+  });
+});

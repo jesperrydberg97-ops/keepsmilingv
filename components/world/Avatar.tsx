@@ -6,7 +6,7 @@ import { Component, Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { clone as cloneSkinned } from "three/examples/jsm/utils/SkeletonUtils.js";
 import type { AvatarConfig } from "@/lib/config/avatars";
-import { toon } from "./materials";
+import { surface } from "./materials";
 import { Ink } from "./look";
 
 /**
@@ -136,14 +136,14 @@ function GltfAvatar({ config, sample }: { config: AvatarConfig; sample: () => Mo
 function PlaceholderAvatar({ palette, sample, variant }: { palette: AvatarPalette; sample: () => MotionSample; variant: "founder" | "visitor" }) {
   const mats = useMemo(
     () => ({
-      skin: toon(palette.skin),
-      hair: toon(palette.hair),
-      top: toon(palette.top),
-      bottom: toon(palette.bottom),
-      shoes: toon(palette.shoes),
-      accent: toon(palette.accent),
+      skin: surface(palette.skin),
+      hair: surface(palette.hair),
+      top: surface(palette.top),
+      bottom: surface(palette.bottom),
+      shoes: surface(palette.shoes),
+      accent: surface(palette.accent),
       eye: new THREE.MeshBasicMaterial({ color: "#1a120c" }),
-      cam: toon("#26242c"),
+      cam: surface("#26242c"),
     }),
     [palette],
   );

@@ -85,6 +85,31 @@ export function woodFloorTexture(size: number) {
   });
 }
 
+/** Neutral plaster: soft mottling, tinted by the material colour. Also used as a bump map. */
+export function plasterTexture(size: number) {
+  return cached(`plaster-${size}`, () => {
+    const [c, g] = canvas(size, size);
+    const r = rand(11);
+    g.fillStyle = "#e8e8e8";
+    g.fillRect(0, 0, size, size);
+    for (let i = 0; i < size * 8; i++) {
+      const x = r() * size;
+      const y = r() * size;
+      const rad = 1.5 + r() * size * 0.04;
+      const grd = g.createRadialGradient(x, y, 0, x, y, rad);
+      const l = r() > 0.5 ? 255 : 0;
+      grd.addColorStop(0, `rgba(${l},${l},${l},${0.008 + r() * 0.014})`);
+      grd.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = grd;
+      g.fillRect(x - rad, y - rad, rad * 2, rad * 2);
+    }
+    const t = new THREE.CanvasTexture(c);
+    t.colorSpace = THREE.SRGBColorSpace;
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    return t;
+  });
+}
+
 export function rugTexture(size: number) {
   return cached(`rug-${size}`, () => {
     const [c, g] = canvas(size, size / 1.5);
