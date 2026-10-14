@@ -50,10 +50,11 @@ test.describe("3D studio", () => {
     // The minimap's player marker reflects the avatar position.
     const marker = page.locator('nav[aria-label="Minimap"] g[aria-hidden]');
     const before = await marker.getAttribute("transform");
+    // Hold W until the avatar has visibly moved. Software-rendered CI runners
+    // can produce only a few frames per second, so don't rely on a fixed delay.
     await page.keyboard.down("w");
-    await page.waitForTimeout(1500);
+    await expect.poll(() => marker.getAttribute("transform"), { timeout: 30_000 }).not.toBe(before);
     await page.keyboard.up("w");
-    await expect.poll(() => marker.getAttribute("transform")).not.toBe(before);
 
     await page.getByRole("button", { name: "Stations" }).click();
     await page.getByRole("dialog").getByRole("button", { name: /Booking desk/ }).click();
