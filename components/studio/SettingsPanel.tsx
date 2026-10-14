@@ -14,6 +14,7 @@ export function SettingsPanel() {
           {(
             [
               ["auto", `Auto (${quality})`],
+              ["ultra", "Ultra — sharpest, needs a strong GPU"],
               ["high", "High"],
               ["low", "Low — faster, saves battery"],
             ] as const

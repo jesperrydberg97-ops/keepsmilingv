@@ -24,7 +24,7 @@ function useStation(id: string): Station | undefined {
 function Box({ args, position, mat, rotation, cast = true, ink = true }: { args: [number, number, number]; position: [number, number, number]; mat: THREE.Material; rotation?: [number, number, number]; cast?: boolean; ink?: boolean }) {
   const radius = Math.min(0.035, Math.min(...args) * 0.45);
   return (
-    <RoundedBox args={args} radius={radius} smoothness={2} position={position} rotation={rotation} castShadow={cast} receiveShadow>
+    <RoundedBox args={args} radius={radius} smoothness={4} position={position} rotation={rotation} castShadow={cast} receiveShadow>
       <primitive object={mat} attach="material" />
       {ink && <Ink />}
     </RoundedBox>
@@ -34,7 +34,7 @@ function Box({ args, position, mat, rotation, cast = true, ink = true }: { args:
 function Cyl({ args, position, mat, rotation, ink = true }: { args: [number, number, number, number?]; position: [number, number, number]; mat: THREE.Material; rotation?: [number, number, number]; ink?: boolean }) {
   return (
     <mesh position={position} rotation={rotation} castShadow receiveShadow>
-      <cylinderGeometry args={[args[0], args[1], args[2], args[3] ?? 24]} />
+      <cylinderGeometry args={[args[0], args[1], args[2], Math.max(args[3] ?? 0, 48)]} />
       <primitive object={mat} attach="material" />
       {ink && <Ink />}
     </mesh>
@@ -60,7 +60,7 @@ function Plant({ x, z, scale = 1 }: { x: number; z: number; scale?: number }) {
       <Cyl args={[0.025, 0.03, 0.7]} position={[0, 0.8, 0]} mat={m.darkWood} />
       {leaves.map((l, i) => (
         <mesh key={i} position={l.p} scale={[l.s, l.s * 0.6, l.s]} castShadow>
-          <sphereGeometry args={[1, 10, 8]} />
+          <sphereGeometry args={[1, 28, 20]} />
           <primitive object={l.dark ? m.leafDark : m.leaf} attach="material" />
           <Ink thickness={0.1} />
         </mesh>
@@ -96,12 +96,12 @@ function BookingDesk({ lights }: { lights: boolean }) {
         {[-1, 1].map((s) => (
           <Box key={s} args={[0.05, 0.74, d.d - 0.1]} position={[s * (d.w / 2 - 0.08), 0.37, 0]} mat={m.metal} />
         ))}
-        {/* laptop, facing the visitor (north) */}
-        <group position={[-0.25, 0.79, -0.05]} rotation-y={Math.PI}>
+        {/* laptop: the visitor stands on the -Z (north) side, hinge on the far side */}
+        <group position={[-0.25, 0.79, -0.05]}>
           <Box args={[0.5, 0.02, 0.34]} position={[0, 0, 0]} mat={m.metal} />
-          <group position={[0, 0.01, 0.17]} rotation-x={-1.85}>
-            <Box args={[0.5, 0.33, 0.015]} position={[0, -0.165, 0]} mat={m.black} />
-            <mesh position={[0, -0.165, -0.009]} rotation-y={Math.PI}>
+          <group position={[0, 0.01, 0.17]} rotation-x={0.26}>
+            <Box args={[0.5, 0.33, 0.015]} position={[0, 0.165, 0]} mat={m.black} />
+            <mesh position={[0, 0.165, -0.0085]} rotation-y={Math.PI}>
               <planeGeometry args={[0.46, 0.29]} />
               <meshBasicMaterial map={screen} toneMapped={false} />
             </mesh>
@@ -251,7 +251,7 @@ function Noticeboard({ notes }: { notes: string[] }) {
                 <meshToonMaterial gradientMap={toonRamp()} map={t} />
               </mesh>
               <mesh position={[0, 0.16, 0.01]}>
-                <sphereGeometry args={[0.018, 8, 8]} />
+                <sphereGeometry args={[0.018, 24, 18]} />
                 <meshToonMaterial gradientMap={toonRamp()} color="#c0392b" />
               </mesh>
             </group>
@@ -336,7 +336,7 @@ function ReadingLounge({ lights }: { lights: boolean }) {
             </mesh>
           ))}
           <mesh position={[0.12, 0.6, -0.12]}>
-            <cylinderGeometry args={[0.04, 0.035, 0.09, 16]} />
+            <cylinderGeometry args={[0.04, 0.035, 0.09, 48]} />
             <meshToonMaterial gradientMap={toonRamp()} color="#efe6d4" />
           </mesh>
         </group>
@@ -500,7 +500,7 @@ function Telephone() {
           <Box args={[0.22, 0.09, 0.2]} position={[0, 0.045, 0]} mat={phoneMat} />
           <Cyl args={[0.06, 0.06, 0.01]} position={[0, 0.095, 0.02]} mat={m.paper} />
           <mesh position={[0, 0.13, -0.03]} rotation-z={HALF_PI} castShadow>
-            <capsuleGeometry args={[0.025, 0.16, 4, 8]} />
+            <capsuleGeometry args={[0.025, 0.16, 8, 24]} />
             <primitive object={phoneMat} attach="material" />
           </mesh>
         </group>
@@ -519,7 +519,7 @@ function CinemaCamera({ enabled }: { enabled: boolean }) {
       <group position={[p.x, 0, p.z]}>
         {[0, 2.1, 4.2].map((a) => (
           <mesh key={a} position={[Math.sin(a) * 0.22, 0.65, Math.cos(a) * 0.22]} rotation={[Math.cos(a) * -0.32, 0, Math.sin(a) * 0.32]} castShadow>
-            <cylinderGeometry args={[0.015, 0.012, 1.35, 8]} />
+            <cylinderGeometry args={[0.015, 0.012, 1.35, 20]} />
             <primitive object={m.metal} attach="material" />
           </mesh>
         ))}

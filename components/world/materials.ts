@@ -9,15 +9,24 @@ import { woodFloorTexture } from "./textures";
 
 let ramp: THREE.DataTexture | null = null;
 
-/** 4-step light ramp: deep shadow, shadow, lit, highlight. */
+/**
+ * Soft cel-shading ramp: a smooth S-curve sampled with linear filtering, so
+ * light rolls off gradually (no hard banding) while keeping the stylised,
+ * slightly flattened look of a modern cosy game.
+ */
 export function toonRamp(): THREE.DataTexture {
   if (ramp) return ramp;
-  const steps = [70, 135, 205, 255];
-  const data = new Uint8Array(steps.length * 4);
-  steps.forEach((v, i) => data.set([v, v, v, 255], i * 4));
-  ramp = new THREE.DataTexture(data, steps.length, 1, THREE.RGBAFormat);
-  ramp.minFilter = THREE.NearestFilter;
-  ramp.magFilter = THREE.NearestFilter;
+  const n = 64;
+  const data = new Uint8Array(n * 4);
+  for (let i = 0; i < n; i++) {
+    const x = i / (n - 1);
+    const s = x * x * (3 - 2 * x); // smoothstep
+    const v = Math.round(255 * (0.3 + 0.7 * (0.35 * x + 0.65 * s)));
+    data.set([v, v, v, 255], i * 4);
+  }
+  ramp = new THREE.DataTexture(data, n, 1, THREE.RGBAFormat);
+  ramp.minFilter = THREE.LinearFilter;
+  ramp.magFilter = THREE.LinearFilter;
   ramp.generateMipmaps = false;
   ramp.needsUpdate = true;
   return ramp;
@@ -30,7 +39,7 @@ export function toon(color: THREE.ColorRepresentation, opts: Omit<THREE.MeshToon
 let mats: ReturnType<typeof create> | null = null;
 
 function create() {
-  const floorMap = woodFloorTexture(1024);
+  const floorMap = woodFloorTexture(1024); // supersampled ×2 on high/ultra
   floorMap.repeat.set(6, 4.5);
   return {
     floor: toon("#e9b98a", { map: floorMap }),

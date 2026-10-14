@@ -6,11 +6,25 @@ import * as THREE from "three";
  * lightmaps from the authored studio GLB.
  */
 
+/**
+ * Supersampling factor for every generated texture. 2 on the high/ultra tiers
+ * gives crisp text and grain up close; 1 keeps GPU memory low on phones.
+ * Set once before the first texture is created (see Scene).
+ */
+let DETAIL = 1;
+export function setTextureDetail(scale: number) {
+  DETAIL = scale;
+}
+
+/** Canvas sized at DETAIL× with a matching transform, so drawing code uses logical units. */
 function canvas(w: number, h: number) {
   const c = document.createElement("canvas");
-  c.width = w;
-  c.height = h;
-  return [c, c.getContext("2d")!] as const;
+  c.width = Math.round(w * DETAIL);
+  c.height = Math.round(h * DETAIL);
+  const g = c.getContext("2d")!;
+  g.scale(DETAIL, DETAIL);
+  g.imageSmoothingQuality = "high";
+  return [c, g] as const;
 }
 
 function rand(seed: number) {
@@ -23,10 +37,13 @@ function rand(seed: number) {
 
 const cache = new Map<string, THREE.Texture>();
 function cached<T extends THREE.Texture>(key: string, make: () => T): T {
-  const hit = cache.get(key);
+  const k = `${key}@${DETAIL}`;
+  const hit = cache.get(k);
   if (hit) return hit as T;
   const t = make();
-  cache.set(key, t);
+  // Three clamps this to the GPU's maximum; keeps floors and signs sharp at grazing angles.
+  t.anisotropy = 16;
+  cache.set(k, t);
   return t;
 }
 
@@ -64,7 +81,6 @@ export function woodFloorTexture(size: number) {
     const t = new THREE.CanvasTexture(c);
     t.colorSpace = THREE.SRGBColorSpace;
     t.wrapS = t.wrapT = THREE.RepeatWrapping;
-    t.anisotropy = 8;
     return t;
   });
 }
@@ -122,7 +138,6 @@ export function labelTexture(
     }
     const t = new THREE.CanvasTexture(c);
     t.colorSpace = THREE.SRGBColorSpace;
-    t.anisotropy = 4;
     return t;
   });
 }

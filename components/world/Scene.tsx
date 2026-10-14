@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { AdaptiveDpr, PerformanceMonitor, useProgress } from "@react-three/drei";
+import { PerformanceMonitor, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 import { QUALITY_PRESETS, type QualityTier } from "@/game/quality";
@@ -15,6 +15,7 @@ import { Guide } from "./Guide";
 import { Player } from "./Player";
 import { Room } from "./Room";
 import { Stations } from "./Stations";
+import { setTextureDetail } from "./textures";
 
 export interface SceneProps {
   quality: QualityTier;
@@ -28,6 +29,8 @@ export interface SceneProps {
 
 export default function Scene({ quality, prints, settings, timeline, notes, guideName, onReady }: SceneProps) {
   const preset = QUALITY_PRESETS[quality];
+  // Supersample generated textures (labels, screens, wood grain) except on the low tier.
+  setTextureDetail(quality === "low" ? 1 : 2);
   const [dpr, setDpr] = useState(preset.dpr[1]);
   const panelOpen = useStudio((s) => s.panel !== null);
   const setContextLost = useStudio((s) => s.setContextLost);
@@ -41,7 +44,8 @@ export default function Scene({ quality, prints, settings, timeline, notes, guid
       frameloop={panelOpen ? "demand" : "always"}
       shadows={preset.shadows ? "soft" : false}
       dpr={dpr}
-      gl={{ antialias: preset.antialias, powerPreference: "high-performance", preserveDrawingBuffer: false }}
+      // With a post chain, anti-aliasing happens inside it (MSAA + SMAA).
+      gl={{ antialias: preset.antialias && !preset.post, powerPreference: "high-performance", preserveDrawingBuffer: false }}
       camera={{ fov: 70, near: 0.05, far: 60, position: [0, 1.6, 8] }}
       style={{ touchAction: "none" }}
       aria-label="Interactive 3D studio. Use the Stations menu for an accessible list of everything in the studio."
@@ -65,22 +69,21 @@ export default function Scene({ quality, prints, settings, timeline, notes, guid
         onIncline={() => setDpr((d) => Math.min(preset.dpr[1], d + 0.25))}
         flipflops={4}
       />
-      <AdaptiveDpr pixelated={false} />
       <Lighting quality={quality} />
-      <LookContext.Provider value={{ outlines: quality === "high" }}>
+      <LookContext.Provider value={{ outlines: preset.outlines }}>
       <Suspense fallback={null}>
         <Room />
         <Stations prints={prints} settings={settings} timeline={timeline} notes={notes} practicalLights={preset.practicalLights} />
         {settings.features.welcomeGuide && <Guide name={guideName} />}
         <Player />
         <StationMarkers />
-        <Ambience high={quality === "high"} />
+        <Ambience high={preset.particles} />
         <ReadySignal onReady={onReady} />
       </Suspense>
       </LookContext.Provider>
       <CameraRig />
       <FirstPersonArms />
-      <PostFx high={quality === "high"} />
+      <PostFx preset={preset} />
     </Canvas>
   );
 }
@@ -104,8 +107,9 @@ function Lighting({ quality }: { quality: QualityTier }) {
         shadow-camera-bottom={-11}
         shadow-camera-near={1}
         shadow-camera-far={40}
-        shadow-bias={-0.0004}
-        shadow-normalBias={0.03}
+        shadow-bias={-0.0003}
+        shadow-normalBias={0.025}
+        shadow-radius={4}
       />
       {/* Warm fill from the interior */}
       <pointLight position={[0, 3.8, 2]} intensity={6} distance={14} decay={1.6} color="#ffc98a" />

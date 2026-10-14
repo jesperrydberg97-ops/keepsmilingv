@@ -65,16 +65,16 @@ export function FirstPersonArms() {
     <group ref={side === 1 ? right : left}>
       {/* forearm runs along local +Y; the group tilts it forward */}
       <mesh position={[0, -0.1, 0]} material={mats.sleeve.m} renderOrder={mats.sleeve.order} frustumCulled={false}>
-        <capsuleGeometry args={[0.042, 0.3, 4, 12]} />
+        <capsuleGeometry args={[0.042, 0.3, 12, 32]} />
       </mesh>
       <mesh position={[0, 0.06, 0]} material={mats.cuff.m} renderOrder={mats.cuff.order} frustumCulled={false}>
-        <cylinderGeometry args={[0.046, 0.046, 0.035, 16]} />
+        <cylinderGeometry args={[0.046, 0.046, 0.035, 40]} />
       </mesh>
       <group position={[0, 0.115, 0]}>
-        <RoundedBox args={[0.072, 0.09, 0.034]} radius={0.016} smoothness={3} material={mats.hand.m} renderOrder={mats.hand.order} frustumCulled={false} />
+        <RoundedBox args={[0.072, 0.09, 0.034]} radius={0.016} smoothness={6} material={mats.hand.m} renderOrder={mats.hand.order} frustumCulled={false} />
         {/* thumb */}
         <mesh position={[side * -0.04, -0.012, 0.01]} rotation-z={side * 0.6} material={mats.hand.m} renderOrder={mats.hand.order} frustumCulled={false}>
-          <capsuleGeometry args={[0.011, 0.028, 3, 8]} />
+          <capsuleGeometry args={[0.011, 0.028, 8, 16]} />
         </mesh>
       </group>
     </group>

@@ -33,7 +33,11 @@ export function Dialog({
     const opener = document.activeElement as HTMLElement | null;
     const unregister = registerDialog(() => onCloseRef.current());
     // Focus the title so screen readers announce the dialog, keyboard users can Tab in.
-    requestAnimationFrame(() => ref.current?.querySelector<HTMLElement>("[data-dialog-title]")?.focus());
+    // (Unless the visitor already clicked into the dialog, e.g. a form field.)
+    requestAnimationFrame(() => {
+      const el = ref.current;
+      if (el && !el.contains(document.activeElement)) el.querySelector<HTMLElement>("[data-dialog-title]")?.focus();
+    });
     return () => {
       unregister();
       if (opener && document.contains(opener)) opener.focus({ preventScroll: true });

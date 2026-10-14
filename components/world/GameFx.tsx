@@ -2,7 +2,8 @@
 
 import { useFrame } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
-import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
+import { Bloom, EffectComposer, N8AO, SMAA, Vignette } from "@react-three/postprocessing";
+import type { QualityPreset } from "@/game/quality";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { PROPS } from "@/game/layout";
@@ -83,12 +84,31 @@ export function Ambience({ high }: { high: boolean }) {
   );
 }
 
-export function PostFx({ high }: { high: boolean }) {
-  if (!high) return null;
+/**
+ * Post chain for the high/ultra tiers: MSAA inside the composer plus SMAA for
+ * clean edges (outlines included), optional ambient occlusion for soft contact
+ * shading, a gentle bloom on lamps/markers and a light vignette.
+ */
+export function PostFx({ preset }: { preset: QualityPreset }) {
+  if (!preset.post) return null;
+  // Effects are passed as a flat list (the composer doesn't accept empty slots).
+  const bloom = <Bloom key="bloom" mipmapBlur intensity={0.45} luminanceThreshold={0.9} luminanceSmoothing={0.15} />;
+  const smaa = <SMAA key="smaa" />;
+  const vignette = <Vignette key="vignette" eskil={false} offset={0.25} darkness={0.5} />;
+  if (preset.ao)
+    return (
+      <EffectComposer multisampling={preset.msaa} enableNormalPass={false}>
+        <N8AO aoRadius={0.6} distanceFalloff={0.8} intensity={2.2} quality="high" halfRes={false} color="#2a1608" />
+        {bloom}
+        {smaa}
+        {vignette}
+      </EffectComposer>
+    );
   return (
-    <EffectComposer multisampling={4}>
-      <Bloom mipmapBlur intensity={0.5} luminanceThreshold={0.9} luminanceSmoothing={0.15} />
-      <Vignette eskil={false} offset={0.25} darkness={0.55} />
+    <EffectComposer multisampling={preset.msaa} enableNormalPass={false}>
+      {bloom}
+      {smaa}
+      {vignette}
     </EffectComposer>
   );
 }

@@ -48,6 +48,16 @@ Legend: ✅ implemented & verified · 🟡 implemented, needs credentials / real
 - [ ] 🔒 Founder model + name + approved greeting (see OWNER_CHECKLIST.md §1)
 - [ ] 🔒 Style references to fine-tune the look (OWNER_CHECKLIST.md §3)
 
+## Visual fidelity pass ✅
+- [x] New **Ultra** tier (auto-selected on desktops with a discrete/Apple-silicon GPU): 4096 shadow maps, MSAA ×8 + SMAA, ambient occlusion (N8AO)
+- [x] High tier: MSAA ×4 + SMAA in the post chain; low tier: native MSAA, DPR floor raised to 1
+- [x] Soft cel shading (smooth 64-step ramp instead of 4 hard bands), softer PCF shadows
+- [x] Higher-poly characters, props and plants; rounder edges (RoundedBox smoothness 4–6)
+- [x] Generated textures supersampled ×2 on high/ultra, 16× anisotropic filtering
+- [x] Removed AdaptiveDpr (it lowered resolution and softened the image)
+- [x] Fixed the booking-desk laptop lid (was lying flat)
+- [ ] Verify Ultra/High frame rate on real hardware (sandbox renders on the CPU only)
+
 ## Phase 3 — Art pass ⏳
 - [ ] Authored studio GLB with baked lightmaps, KTX2, atlases
 - [ ] Replace procedural textures; refine lighting; subtle ambient animation pass

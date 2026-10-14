@@ -195,18 +195,18 @@ function PlaceholderAvatar({ palette, sample, variant }: { palette: AvatarPalett
       ].map(([ref, x]) => (
         <group key={String(x)} ref={ref as React.RefObject<THREE.Group>} position={[x as number, 0.86, 0]}>
           <mesh position={[0, -0.4, 0]} castShadow material={mats.bottom}>
-            <capsuleGeometry args={[0.09, 0.62, 4, 12]} />
+            <capsuleGeometry args={[0.09, 0.62, 10, 32]} />
             <Ink />
           </mesh>
           <mesh position={[0, -0.81, 0.05]} castShadow material={mats.shoes}>
-            <capsuleGeometry args={[0.07, 0.16, 4, 10]} />
+            <capsuleGeometry args={[0.07, 0.16, 10, 32]} />
             <Ink />
           </mesh>
         </group>
       ))}
       {/* chunky torso */}
       <mesh position={[0, 1.13, 0]} castShadow material={mats.top}>
-        <capsuleGeometry args={[0.24, 0.34, 6, 16]} />
+        <capsuleGeometry args={[0.24, 0.34, 10, 32]} />
         <Ink />
       </mesh>
       {/* arms pivot at shoulders */}
@@ -216,11 +216,11 @@ function PlaceholderAvatar({ palette, sample, variant }: { palette: AvatarPalett
       ].map(([ref, x]) => (
         <group key={String(x)} ref={ref as React.RefObject<THREE.Group>} position={[x as number, 1.36, 0]}>
           <mesh position={[0, -0.26, 0]} castShadow material={mats.top}>
-            <capsuleGeometry args={[0.075, 0.38, 4, 10]} />
+            <capsuleGeometry args={[0.075, 0.38, 10, 32]} />
             <Ink />
           </mesh>
           <mesh position={[0, -0.53, 0]} castShadow material={mats.skin}>
-            <sphereGeometry args={[0.075, 14, 10]} />
+            <sphereGeometry args={[0.075, 48, 32]} />
             <Ink />
           </mesh>
         </group>
@@ -228,26 +228,26 @@ function PlaceholderAvatar({ palette, sample, variant }: { palette: AvatarPalett
       {/* oversized head: reads at a distance, very "game character" */}
       <group ref={head} position={[0, 1.62, 0]}>
         <mesh castShadow material={mats.skin}>
-          <sphereGeometry args={[0.2, 24, 18]} />
+          <sphereGeometry args={[0.2, 48, 32]} />
           <Ink />
         </mesh>
         {/* hair cap */}
         <mesh position={[0, 0.05, -0.02]} material={mats.hair}>
-          <sphereGeometry args={[0.205, 24, 14, 0, Math.PI * 2, 0, Math.PI / 2.1]} />
+          <sphereGeometry args={[0.205, 48, 32, 0, Math.PI * 2, 0, Math.PI / 2.1]} />
         </mesh>
         {/* eyes + a smile — Keep Smiling */}
         {[-0.07, 0.07].map((x) => (
           <mesh key={x} position={[x, 0.01, 0.185]} material={mats.eye}>
-            <sphereGeometry args={[0.024, 10, 8]} />
+            <sphereGeometry args={[0.024, 48, 32]} />
           </mesh>
         ))}
         <mesh position={[0, -0.07, 0.17]} rotation={[0.15, 0, Math.PI]} material={mats.eye}>
-          <torusGeometry args={[0.05, 0.009, 6, 16, Math.PI]} />
+          <torusGeometry args={[0.05, 0.009, 12, 32, Math.PI]} />
         </mesh>
         {variant === "founder" && (
           // beanie in brand amber: reads as "the filmmaker"
           <mesh position={[0, 0.09, -0.01]} castShadow material={mats.accent}>
-            <sphereGeometry args={[0.215, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2.4]} />
+            <sphereGeometry args={[0.215, 48, 32, 0, Math.PI * 2, 0, Math.PI / 2.4]} />
             <Ink />
           </mesh>
         )}
@@ -260,7 +260,7 @@ function PlaceholderAvatar({ palette, sample, variant }: { palette: AvatarPalett
             <Ink />
           </mesh>
           <mesh position={[0.03, 0, 0.07]} rotation-x={Math.PI / 2} material={mats.cam}>
-            <cylinderGeometry args={[0.045, 0.05, 0.07, 16]} />
+            <cylinderGeometry args={[0.045, 0.05, 0.07, 40]} />
           </mesh>
         </group>
       )}
