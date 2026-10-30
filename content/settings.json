@@ -1,0 +1,37 @@
+{
+  "brandName": "Keep Smiling Visuals",
+  "tagline": "Content that creates smiles.",
+  "description": "Keep Smiling Visuals is a filmmaking, photography and visual storytelling studio based in Gothenburg, Sweden.",
+  "baseLocation": "Gothenburg, Sweden",
+  "contactEmail": "keepsmilingvisuals@gmail.com",
+  "publicPhone": null,
+  "socialLinks": [],
+  "showreel": { "youtubeId": null, "title": "KSV Showreel" },
+  "music": {
+    "projectName": "Free Music Plug",
+    "description": "Free Music Plug is a music project featured in the KSV studio. Placeholder description — the owner will supply the real story, playlists and platform links.",
+    "links": [],
+    "embeds": [],
+    "placeholder": true
+  },
+  "inquiry": {
+    "budgetOptions": ["Not sure yet", "Under 10 000 SEK", "10 000 – 30 000 SEK", "30 000 – 75 000 SEK", "75 000 – 150 000 SEK", "150 000 SEK +"],
+    "projectTypes": [
+      { "id": "commercial", "label": "Commercial" },
+      { "id": "event", "label": "Event / aftermovie" },
+      { "id": "music-video", "label": "Music video" },
+      { "id": "documentary", "label": "Documentary" },
+      { "id": "social", "label": "Social content" },
+      { "id": "product", "label": "Product video" },
+      { "id": "photography", "label": "Photography" },
+      { "id": "other", "label": "Other" }
+    ]
+  },
+  "commerce": {
+    "enabled": false,
+    "provider": "none",
+    "disclosure": "Online print checkout is not open yet. Send a print request and KSV will reply personally with pricing, shipping options and lead time before anything is paid."
+  },
+  "stations": {},
+  "features": { "easterEggs": true, "welcomeGuide": true }
+}

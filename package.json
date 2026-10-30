@@ -1,0 +1,47 @@
+{
+  "name": "keep-smiling-visuals-studio",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Keep Smiling Visuals - interactive 3D studio website",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "check": "npm run typecheck && npm run test",
+    "export:blockout": "node --experimental-strip-types --no-warnings scripts/export-blockout.ts"
+  },
+  "engines": {
+    "node": ">=20.9"
+  },
+  "dependencies": {
+    "@react-three/drei": "10.7.6",
+    "@react-three/fiber": "9.3.0",
+    "@react-three/postprocessing": "^3.0.4",
+    "next": "15.5.27",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "server-only": "^0.0.1",
+    "three": "0.180.0",
+    "zod": "3.25.76",
+    "zustand": "5.0.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@tailwindcss/postcss": "4.1.13",
+    "@types/node": "22.18.0",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9",
+    "@types/three": "0.180.0",
+    "postcss": "8.5.30",
+    "tailwindcss": "4.1.13",
+    "typescript": "5.9.2",
+    "vitest": "4.1.11"
+  },
+  "overrides": {
+    "postcss": "$postcss"
+  }
+}
