@@ -39,6 +39,8 @@ export const runtime = {
   snapCamera: true,
   /** performance.now()/1000 of the last interaction — drives the avatar gesture. */
   lastInteractAt: -10,
+  /** performance.now()/1000 when the founder's backflip started. */
+  founderFlipAt: -10,
 };
 
 export function resetRuntime() {
@@ -53,6 +55,7 @@ export function resetRuntime() {
   runtime.lookPitch = FP_DEFAULT_PITCH;
   runtime.turnTo = null;
   runtime.lastInteractAt = -10;
+  runtime.founderFlipAt = -10;
   runtime.input.keys.clear();
   runtime.input.joystick = { x: 0, y: 0 };
   runtime.focus = null;

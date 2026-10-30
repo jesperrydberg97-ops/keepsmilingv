@@ -48,8 +48,12 @@ export interface SurfaceOptions {
 /** A surface in the current art style. */
 export function surface(color: THREE.ColorRepresentation, opts: SurfaceOptions = {}): THREE.Material {
   const { roughness = 0.7, metalness = 0, bumpMap, bumpScale, ...rest } = opts;
-  if (REALISTIC) return new THREE.MeshStandardMaterial({ color, roughness, metalness, bumpMap, bumpScale: bumpScale ?? 1, ...rest });
-  return new THREE.MeshToonMaterial({ color, gradientMap: toonRamp(), ...rest });
+  // Only pass optional maps that are set (three warns about `undefined` parameters).
+  const defined = Object.fromEntries(Object.entries(rest).filter(([, v]) => v !== undefined));
+  if (REALISTIC) {
+    return new THREE.MeshStandardMaterial({ color, roughness, metalness, ...(bumpMap ? { bumpMap, bumpScale: bumpScale ?? 1 } : {}), ...defined });
+  }
+  return new THREE.MeshToonMaterial({ color, gradientMap: toonRamp(), ...defined });
 }
 
 /** Pick a colour per art style: muted natural tones for realistic, punchier for stylized. */

@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { interact, navGrid } from "@/game/actions";
+import { founderBackflip, interact, navGrid } from "@/game/actions";
 import { buildStations } from "@/game/layout";
 import { detectQuality, hasWebGL, type QualityTier } from "@/game/quality";
 import { resetRuntime, runtime } from "@/game/runtime";
@@ -96,6 +96,10 @@ export function StudioApp({ content }: { content: StudioContent }) {
         return;
       }
       const onWorld = e.target === rootRef.current || e.target === document.body;
+      if (e.code === "KeyB" && !e.repeat) {
+        founderBackflip();
+        return;
+      }
       if (e.code === "KeyE" || (e.key === "Enter" && onWorld) || (e.code === "Space" && onWorld)) {
         const near = st.stations.find((s) => s.id === st.nearestStationId);
         if (near) {

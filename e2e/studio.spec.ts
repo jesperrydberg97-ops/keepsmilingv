@@ -16,6 +16,21 @@ test.describe("3D studio", () => {
     await expect(guide).toHaveCount(0);
   });
 
+  test("the founder model loads and does a backflip on request", async ({ page }) => {
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    page.on("console", (m) => {
+      if (m.type() === "error") errors.push(m.text());
+    });
+    const model = page.waitForResponse((r) => r.url().endsWith("/models/founder.glb") && r.ok(), { timeout: 30_000 });
+    await enterStudio(page);
+    await model;
+    await page.getByRole("button", { name: "Backflip" }).click();
+    await page.keyboard.press("KeyB");
+    await page.waitForTimeout(500);
+    expect(errors.filter((e) => /avatar|founder|backflip/i.test(e))).toEqual([]);
+  });
+
   test("fast travel opens stations; Escape and Back close them", async ({ page }) => {
     await enterStudio(page);
     await page.getByRole("button", { name: "Explore freely" }).click();

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { interact } from "@/game/actions";
+import { founderBackflip, interact } from "@/game/actions";
 import { useStudio } from "@/game/store";
 import { HOST_AVATAR } from "@/lib/config/avatars";
 import { track } from "@/lib/analytics";
@@ -166,6 +166,23 @@ export function Hud({ showHint }: { showHint: boolean }) {
           </div>
         )}
       </div>
+
+      {/* The founder's party trick */}
+      {!panelOpen && (
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          <button
+            onClick={() => founderBackflip()}
+            className="pointer-events-auto flex flex-col items-center gap-0.5 rounded-2xl border border-amber/50 bg-ink/75 px-3 py-2 text-xs font-semibold text-amber-strong shadow-xl backdrop-blur-md transition hover:bg-amber/15 active:scale-95"
+            title={coarse ? "Ask the founder for a backflip" : "Ask the founder for a backflip (B)"}
+          >
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+              <path d="M20 12a8 8 0 1 1-2.6-5.9" />
+              <path d="M20 3v4.5h-4.5" />
+            </svg>
+            Backflip
+          </button>
+        </div>
+      )}
 
       {/* Touch controls */}
       {coarse && !panelOpen && (

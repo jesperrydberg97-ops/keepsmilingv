@@ -7,9 +7,15 @@ Bocka av eftersom. Viktigast först inom varje avsnitt.
 
 ## 1. Din 3D-modell (du som värd vid mattan)
 
-Du står vid mattans framkant och hälsar besökare välkomna. Tills din modell finns visas en tecknad platshållare med texten "Founder model: placeholder".
+Du står vid mattans framkant och hälsar besökare välkomna.
 
-- [ ] **`founder.glb`**: en 3D-modell av dig i **semi-realistisk** stil som passar rummet (som en karaktär i ett modernt spel, inte en fotoskanning). Detaljerad specifikation finns i [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md). Kort version:
+- [x] **Modell levererad** (`me_for_website.glb`): optimerad från 19,5 MB till 0,8 MB och inlagd som `public/models/founder.glb`. Den har inget skelett, så just nu andas den, nickar när den pratar, hoppar lite av glädje när den hälsar och gör **bakåtvolt** via knappen "Backflip" (eller tangenten B).
+- [ ] Valfritt, nästa nivå: en **riggad** version (t.ex. ladda upp modellen i Mixamo, auto-rigg, ladda ner med animationerna Idle, Wave och Talk). Då kan den vinka och gestikulera på riktigt. Det kräver ingen kodändring.
+- [ ] Bekräfta **din längd** (modellen är nu skalad till 1,80 m)
+
+Ursprunglig specifikation (gäller en framtida riggad version):
+
+- [x] **`founder.glb`**: en 3D-modell av dig i **semi-realistisk** stil som passar rummet (som en karaktär i ett modernt spel, inte en fotoskanning). Detaljerad specifikation finns i [`ASSET_PIPELINE.md`](./ASSET_PIPELINE.md). Kort version:
   - glTF binär (`.glb`), meter-skala (din riktiga längd), står på origo, tittar mot +Z
   - Rig med humanoid-skelett (Mixamo-kompatibelt är enklast)
   - Animationer på plats (ingen rotförflyttning): **Idle**, **Wave** (vinka), **Talk** (pratar/gestikulerar). Walk är frivillig.
@@ -30,7 +36,7 @@ Du står vid mattans framkant och hälsar besökare välkomna. Tills din modell 
 
 ## 3. Rummet i 3D (semi-realistiskt, beslutat)
 
-Studion visas nu i semi-realistisk stil med riktiga material. Den slutliga, detaljerade rummodellen (`studio.glb`) byggs i Blender ovanpå blockout-filen. Allt står i [`BLENDER.md`](./BLENDER.md).
+Studion visas nu i semi-realistisk stil med riktiga material. Den slutliga, detaljerade rummodellen (`studio.glb`) byggs i Blender ovanpå blockout-filen. Allt står i [`BLENDER.md`](./BLENDER.md). Färdiga prompter för Higgsfield (Blender, cinematic ljus) finns i [`HIGGSFIELD_STUDIO_PROMPT.md`](./HIGGSFIELD_STUDIO_PROMPT.md).
 - [ ] **Välj väg:** bygga själv i Blender, beställa av en 3D-artist (skicka `BLENDER.md` + `docs/blender/ksv-studio-blockout.glb`) eller kombinera med köpta möbelpaket
 - [ ] **3–8 referensbilder** på studior/loft du gillar (ljus, material, möbler, färger)
 - [ ] Säg om **någon station ska bytas, flyttas eller tas bort** innan modelleringen börjar. Planlösningen ändras lättast nu.

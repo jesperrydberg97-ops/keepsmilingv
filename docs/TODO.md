@@ -77,6 +77,10 @@ Legend: ✅ implemented & verified · 🟡 implemented, needs credentials / real
 - [ ] Stripe Checkout (hosted) once business decisions are made
 
 ## Phase 5 — Avatars 🔒
+- [x] Founder likeness supplied (static scan) → `public/models/founder.glb`, optimised to 0.8 MB, auto-scaled to 1.8 m, faced +Z
+- [x] Procedural motion for unrigged models (breathe, nod while talking, greeting hop)
+- [x] Founder backflip: HUD button + B key, pure pose maths in `game/founderMoves.ts` (unit tested), name tag hides mid-flip
+- [ ] Rigged founder with Idle/Wave/Talk clips (optional upgrade, no code change)
 - [ ] Import `founder-player.glb`, `welcome-guide.glb`; validate scale/orientation/clips
 
 ## Phase 6 — Hardening ⏳

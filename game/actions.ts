@@ -3,7 +3,8 @@
 import { track, type AnalyticsEvent } from "@/lib/analytics";
 import { sfx } from "./audio";
 import { isWithinReach } from "./interaction";
-import { PLAYER_RADIUS, STUDIO_LAYOUT } from "./layout";
+import { BACKFLIP, isFlipping } from "./founderMoves";
+import { PLAYER_RADIUS, PROPS, STUDIO_LAYOUT } from "./layout";
 import { buildNavGrid, findPath, type NavGrid } from "./pathfinding";
 import { FIRST_PERSON, lookAtAngles } from "./camera";
 import { FP_DEFAULT_PITCH, runtime, teleport } from "./runtime";
@@ -73,6 +74,23 @@ export function interact(station: Station) {
 }
 
 /** Walk to a point (click-to-move). Returns false if unreachable. */
+/**
+ * Ask the founder for a backflip. In first person the view turns toward them
+ * so it isn't missed. Ignored while a flip is already in progress.
+ */
+export function founderBackflip(now = performance.now() / 1000): boolean {
+  if (isFlipping(now - runtime.founderFlipAt)) return false;
+  runtime.founderFlipAt = now;
+  const st = useStudio.getState();
+  if (st.settings.cameraMode === "first") {
+    const p = runtime.player.position;
+    runtime.turnTo = lookAtAngles([p.x, FIRST_PERSON.eyeHeight, p.z], [PROPS.npc.x, BACKFLIP.pivot + 0.2, PROPS.npc.z]);
+  }
+  if (st.settings.sound) sfx.flip();
+  track("easter_egg_found", { egg: "backflip" });
+  return true;
+}
+
 export function walkTo(target: Vec2, opts: { heading?: number; stationId?: string; sprint?: boolean } = {}): boolean {
   const path = findPath(navGrid(), runtime.player.position, target);
   if (!path) return false;

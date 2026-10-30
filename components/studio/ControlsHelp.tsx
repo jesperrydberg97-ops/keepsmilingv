@@ -8,6 +8,7 @@ const ROWS: [string, string][] = [
   ["Zoom", "Mouse wheel or pinch (third-person view only)"],
   ["Change view", "Settings → Camera view: first or third person"],
   ["Sprint", "Hold Shift"],
+  ["Ask the founder for a backflip", "Press B or the Backflip button (right edge)"],
   ["Close a panel", "Esc, the Close button or your device's Back button"],
   ["Go anywhere instantly", "Stations menu (top bar)"],
 ];

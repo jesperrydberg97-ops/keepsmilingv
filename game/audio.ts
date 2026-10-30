@@ -46,6 +46,14 @@ export const sfx = {
     if (!ac) return;
     noiseBurst(ac, ac.currentTime, 0.08, 0.7, 1500);
   },
+  /** Swoosh on take-off and a soft thud on landing (founder backflip). */
+  flip() {
+    const ac = audio();
+    if (!ac) return;
+    const t = ac.currentTime;
+    noiseBurst(ac, t + 0.2, 0.4, 0.22, 900);
+    noiseBurst(ac, t + 0.95, 0.07, 0.6, 260);
+  },
   chime() {
     const ac = audio();
     if (!ac) return;

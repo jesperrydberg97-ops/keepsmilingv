@@ -183,3 +183,34 @@ describe("authored studio model node names", () => {
     }
   });
 });
+
+import { BACKFLIP, backflipPose, isFlipping } from "@/game/founderMoves";
+
+describe("founder backflip", () => {
+  it("rests outside the flip window", () => {
+    for (const t of [-1, BACKFLIP.duration, 5, Number.NaN]) expect(backflipPose(t)).toEqual({ lift: 0, angle: 0, squash: 1 });
+    expect(isFlipping(-0.1)).toBe(false);
+    expect(isFlipping(0.5)).toBe(true);
+  });
+
+  it("does one full backwards rotation, lands on its feet and never sinks into the floor", () => {
+    let minAngle = 0;
+    let maxLift = 0;
+    for (let t = 0; t < BACKFLIP.duration; t += 1 / 120) {
+      const p = backflipPose(t);
+      expect(Number.isFinite(p.lift + p.angle + p.squash)).toBe(true);
+      expect(p.lift).toBeGreaterThanOrEqual(0);
+      expect(p.squash).toBeGreaterThan(0.8);
+      minAngle = Math.min(minAngle, p.angle);
+      maxLift = Math.max(maxLift, p.lift);
+    }
+    expect(minAngle).toBeLessThan(-Math.PI * 2 + 0.05);
+    expect(maxLift).toBeCloseTo(BACKFLIP.height, 1);
+    // Upside down well clear of the floor: pivot + lift exceeds the head-to-hip distance.
+    const mid = backflipPose(BACKFLIP.crouch + BACKFLIP.air / 2);
+    expect(Math.abs(mid.angle + Math.PI)).toBeLessThan(0.1);
+    expect(BACKFLIP.pivot + mid.lift).toBeGreaterThan(1.8 - BACKFLIP.pivot);
+    // Landing pose is upright.
+    expect(backflipPose(BACKFLIP.crouch + BACKFLIP.air + 0.01).angle).toBe(0);
+  });
+});

@@ -76,7 +76,8 @@ class AvatarErrorBoundary extends Component<{ fallback: React.ReactNode; childre
 }
 
 function GltfAvatar({ config, sample }: { config: AvatarConfig; sample: () => MotionSample }) {
-  const gltf = useGLTF(config.url!);
+  // Draco from the bundled decoder; Meshopt is decoded in-browser by drei.
+  const gltf = useGLTF(config.url!, "/decoders/draco/", true);
   const scene = useMemo(() => {
     const s = cloneSkinned(gltf.scene);
     s.traverse((o) => {
@@ -85,20 +86,54 @@ function GltfAvatar({ config, sample }: { config: AvatarConfig; sample: () => Mo
         o.frustumCulled = false; // skinned bounds are often wrong in exported files
       }
     });
+    if (config.height) {
+      // Normalise odd units: target height, feet on the floor, centred.
+      const box = new THREE.Box3().setFromObject(s);
+      const size = box.getSize(new THREE.Vector3());
+      const k = size.y > 0 ? config.height / size.y : 1;
+      const centre = box.getCenter(new THREE.Vector3());
+      const fit = new THREE.Group();
+      s.position.set(-centre.x, -box.min.y, -centre.z);
+      fit.add(s);
+      fit.scale.setScalar(k);
+      return fit;
+    }
     return s;
-  }, [gltf.scene]);
+  }, [gltf.scene, config.height]);
   const group = useRef<THREE.Group>(null);
+  const body = useRef<THREE.Group>(null);
   const { actions } = useAnimations(gltf.animations, group);
   const current = useRef<string | null>(null);
+  const isStatic = gltf.animations.length === 0;
 
   useEffect(() => {
+    if (isStatic) {
+      console.info(`[avatar] ${config.url} has no animations; using procedural idle/greeting motion`);
+      return;
+    }
     if (!actions[config.clips.idle]) console.warn(`[avatar] ${config.url} has no "${config.clips.idle}" clip (required)`);
     const optional = Object.values(config.clips).filter((c) => c && !actions[c]);
     if (optional.length) console.info(`[avatar] ${config.url} has no clips named: ${optional.join(", ")} (those states fall back)`);
-  }, [actions, config]);
+  }, [actions, config, isStatic]);
 
-  useFrame(() => {
+  useFrame(({ clock }, dt) => {
     const { speed, interactAge, wave = 0, talk = false } = sample();
+    if (isStatic) {
+      // An unrigged model can't bend, so it "acts" with the whole body:
+      // breathing, a little sway, a nod while talking, a hop of joy when greeting.
+      const b = body.current;
+      if (!b) return;
+      const t = clock.elapsedTime;
+      const k = Math.min(1, dt * 6);
+      const breathe = 1 + Math.sin(t * 1.6) * 0.006;
+      const nod = talk ? Math.sin(t * 5) * 0.035 : 0;
+      const hop = wave > 0.5 ? Math.max(0, Math.sin(t * 7)) * 0.025 : 0;
+      b.scale.y = breathe;
+      b.position.y += (hop - b.position.y) * k;
+      b.rotation.x += (nod - b.rotation.x) * k;
+      b.rotation.z = Math.sin(t * 0.8) * 0.012;
+      return;
+    }
     const c = config.clips;
     const has = (n?: string): n is string => !!n && !!actions[n];
     let name = speed < 0.15 ? c.idle : speed < (config.walkClipSpeed + config.runClipSpeed) / 2 ? c.walk : c.run;
@@ -121,8 +156,10 @@ function GltfAvatar({ config, sample }: { config: AvatarConfig; sample: () => Mo
   });
 
   return (
-    <group ref={group} scale={config.scale} rotation-y={config.rotationY}>
-      <primitive object={scene} />
+    <group ref={body}>
+      <group ref={group} scale={config.scale} rotation-y={config.rotationY}>
+        <primitive object={scene} />
+      </group>
     </group>
   );
 }
