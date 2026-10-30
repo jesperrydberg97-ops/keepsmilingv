@@ -32,13 +32,15 @@ test.describe("3D studio", () => {
   });
 
   test("fast travel opens stations; Escape and Back close them", async ({ page }) => {
+    // Several round trips through the 3D view; the authored studio renders slowly on CI's software GPU.
+    test.slow();
     await enterStudio(page);
     await page.getByRole("button", { name: "Explore freely" }).click();
     const stationsBtn = page.getByRole("button", { name: "Stations" });
     await stationsBtn.click();
     await page.getByRole("dialog").getByRole("button", { name: /Project TV/ }).click();
     const dialog = page.getByRole("dialog");
-    await expect(dialog).toContainText("Project TV");
+    await expect(dialog).toContainText("Project TV", { timeout: 30_000 });
     await expect(dialog.getByRole("button", { name: "All Projects" })).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog")).toHaveCount(0);
