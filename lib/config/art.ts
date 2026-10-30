@@ -16,5 +16,5 @@ export const ART_STYLE: ArtStyle = "realistic";
  * objects are found by node name (station_<id>, see docs/BLENDER.md).
  */
 export const STUDIO_MODEL: { url: string | null } = {
-  url: null, // "/models/studio.glb"
+  url: "/models/studio.glb",
 };

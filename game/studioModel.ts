@@ -5,7 +5,10 @@
  *   station_gallery_1 … station_gallery_4  (frames, in order)
  * Blender may append ".001" etc. to duplicated names; that suffix is ignored.
  */
-export function stationIdFromNodeName(name: string, printSlugs: readonly string[]): string | null {
+export function stationIdFromNodeName(
+  name: string,
+  printSlugs: readonly string[],
+): string | null {
   const clean = name.replace(/\.\d+$/, "");
   const m = /^station_(.+)$/.exec(clean);
   if (!m) return null;
@@ -30,3 +33,24 @@ export function printIndexFromNodeName(name: string): number | null {
   const m = /^print_(\d+)$/.exec(name.replace(/\.\d+$/, ""));
   return m ? Number(m[1]) - 1 : null;
 }
+
+/** The walkable floor mesh (`floor`, or `floor.001` after a Blender duplicate) — not `floor_lamp` etc. */
+export function isWalkableFloor(name: string): boolean {
+  return /^floor(\.\d+)?$/i.test(name);
+}
+
+/** `hit_*` meshes are invisible click targets that make small props easy to click. */
+export function isClickProxy(name: string): boolean {
+  return name.startsWith("hit_");
+}
+
+/**
+ * Materials the site replaces with its own textured versions (the authored
+ * file carries Blender-procedural shading that glTF can't store).
+ */
+export const SITE_MATERIALS = {
+  M_floor_oak: "floor",
+  M_wall_plaster: "wall",
+  M_rug: "rug",
+  M_window_glass: "glass",
+} as const;

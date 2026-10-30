@@ -164,6 +164,30 @@ describe("interaction", () => {
 });
 
 describe("authored studio model node names", () => {
+  it("only the floor itself is walkable; hit_ meshes are click proxies", async () => {
+    const { isWalkableFloor, isClickProxy } = await import("@/game/studioModel");
+    expect(isWalkableFloor("floor")).toBe(true);
+    expect(isWalkableFloor("floor.001")).toBe(true);
+    expect(isWalkableFloor("floor_lamp")).toBe(false);
+    expect(isWalkableFloor("floor_plant.001")).toBe(false);
+    expect(isClickProxy("hit_station_tv")).toBe(true);
+    expect(isClickProxy("screen_tv")).toBe(false);
+  });
+  it("the shipped studio.glb has every station, screen, print and the floor", async () => {
+    const { readFileSync, existsSync } = await import("node:fs");
+    const { STUDIO_MODEL } = await import("@/lib/config/art");
+    if (!STUDIO_MODEL.url) return;
+    const file = `public${STUDIO_MODEL.url}`;
+    expect(existsSync(file)).toBe(true);
+    const buf = readFileSync(file);
+    const json = JSON.parse(buf.subarray(20, 20 + buf.readUInt32LE(12)).toString("utf8")) as { nodes: { name?: string }[] };
+    const names = new Set(json.nodes.map((n) => n.name ?? ""));
+    const { stationIdFromNodeName } = await import("@/game/studioModel");
+    const slugs = prints.map((p) => p.slug);
+    const found = new Set([...names].map((n) => stationIdFromNodeName(n, slugs)).filter(Boolean));
+    for (const s of stations) if (s.id !== "npc-guide") expect(found, s.id).toContain(s.id);
+    for (const n of ["floor", "screen_tv", "screen_showreel", "screen_laptop", "print_1", "print_2", "print_3", "print_4"]) expect(names, n).toContain(n);
+  });
   it("maps station nodes to station ids", async () => {
     const { stationIdFromNodeName, printIndexFromNodeName } = await import("@/game/studioModel");
     const slugs = ["a", "b"];

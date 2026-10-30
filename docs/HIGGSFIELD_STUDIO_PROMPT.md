@@ -1,5 +1,10 @@
 # Higgsfield-prompt: studion i Blender (cinematic)
 
+> **Uppdatering:** Rummet är nu byggt direkt i ditt Higgsfield-konto (3D Jutsu-projektet
+> "KSV Studio – Keep Smiling Visuals loft") och ligger live som `public/models/studio.glb`.
+> Skripten som kördes finns i [`blender/higgsfield/`](./blender/higgsfield/README.md).
+> Prompterna nedan kan du använda om du vill bygga en ny variant själv.
+
 Det här är prompter för Higgsfields **3D Scene Builder**, som bygger scenen i Blender. Kopiera dem steg för
 steg. Prompterna är på engelska eftersom verktygen förstår engelska bäst.
 

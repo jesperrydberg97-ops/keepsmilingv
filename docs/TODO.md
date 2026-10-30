@@ -76,6 +76,13 @@ Legend: ✅ implemented & verified · 🟡 implemented, needs credentials / real
 - [ ] Optional YouTube Data API sync (server-side, cached) — curated IDs work without it
 - [ ] Stripe Checkout (hosted) once business decisions are made
 
+## Studio model (Higgsfield 3D Jutsu) ✅
+- [x] Room built in Blender via Higgsfield from `game/layout.ts`; catalog furniture fitted into keep-out boxes
+- [x] All stations named `station_<id>` with `screen_*`, `print_*`, invisible `hit_*` click targets
+- [x] Site: drops file cameras/lights, hides click proxies, applies site wood/plaster/rug textures by material name, unflips screen/print textures for glTF UVs, exact `floor` walk target
+- [x] Test that the shipped GLB contains every station, screen, print and the floor
+- [ ] Optional: baked lightmaps/AO for a more cinematic look (needs image textures in the file)
+
 ## Phase 5 — Avatars 🔒
 - [x] Founder likeness supplied (static scan) → `public/models/founder.glb`, optimised to 0.8 MB, auto-scaled to 1.8 m, faced +Z
 - [x] Procedural motion for unrigged models (breathe, nod while talking, greeting hop)

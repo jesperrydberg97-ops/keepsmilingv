@@ -4,6 +4,7 @@ Asset slots (see `lib/config/avatars.ts` and `docs/ASSET_PIPELINE.md`):
 
 | File | Purpose | Status |
 | --- | --- | --- |
+| `studio.glb` | The studio room, built with Higgsfield 3D Jutsu (see `docs/blender/higgsfield/`) | **Live** (0.4 MB) |
 | `founder.glb` | The founder greeting visitors at the rug | **Supplied** (static scan, no rig): idles, nods and backflips procedurally |
 
 `founder.glb` was optimised from the owner's 19.5 MB export with:

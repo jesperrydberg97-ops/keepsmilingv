@@ -1,5 +1,9 @@
 # Studio model: Blender guide and artist brief
 
+> **Status:** `public/models/studio.glb` is live. It was built with Higgsfield 3D Jutsu (Blender in the
+> cloud); see [`blender/higgsfield/README.md`](./blender/higgsfield/README.md). This guide still
+> applies if you want to replace it with a hand-made or commissioned model.
+
 ## Snabbstart (svenska)
 
 1. Öppna Blender → **File → Import → glTF 2.0** → välj [`docs/blender/ksv-studio-blockout.glb`](./blender/ksv-studio-blockout.glb).
@@ -47,10 +51,13 @@ Lived-in, welcoming, uncluttered walkways.
 | Easter eggs: cinema camera on tripod, clapperboard, polaroid on the floor | `station_egg_shutter`, `station_egg_clapper`, `station_egg_polaroid` |
 | Picture surface inside each frame (UV 0–1, unwrapped flat) | `print_1` … `print_4` |
 | TV screen surface / showreel screen / laptop screen (UV 0–1) | `screen_tv`, `screen_showreel`, `screen_laptop` |
-| Walkable floor | `floor` (any name starting with `floor`) |
+| Walkable floor | `floor` (exactly; `floor_lamp` etc. are not walkable) |
+| Optional invisible click target around a small or catalog prop | `hit_<anything>` inside the station |
 
   The site puts live content on the `screen_*` and `print_*` surfaces, so give them a simple
-  material and a clean 0–1 UV map.
+  material and a clean 0–1 UV map. Materials named `M_floor_oak`, `M_wall_plaster`, `M_rug` and
+  `M_window_glass` are replaced by the site's own textured versions (UVs in metres: floor
+  1 unit = 4 m, walls 1 unit = 2 m). Cameras and lights in the file are ignored.
 
 ### Technical spec
 

@@ -37,7 +37,9 @@ Ursprunglig specifikation (gäller en framtida riggad version):
 ## 3. Rummet i 3D (semi-realistiskt, beslutat)
 
 Studion visas nu i semi-realistisk stil med riktiga material. Den slutliga, detaljerade rummodellen (`studio.glb`) byggs i Blender ovanpå blockout-filen. Allt står i [`BLENDER.md`](./BLENDER.md). Färdiga prompter för Higgsfield (Blender, cinematic ljus) finns i [`HIGGSFIELD_STUDIO_PROMPT.md`](./HIGGSFIELD_STUDIO_PROMPT.md).
-- [ ] **Välj väg:** bygga själv i Blender, beställa av en 3D-artist (skicka `BLENDER.md` + `docs/blender/ksv-studio-blockout.glb`) eller kombinera med köpta möbelpaket
+- [x] **Byggt i Higgsfield (Blender i molnet):** riktiga möbler från Higgsfields katalog och stationerna modellerade på exakt rätt plats. Ligger live som `public/models/studio.glb` (0,4 MB). Projektet finns i ditt Higgsfield-konto: "KSV Studio – Keep Smiling Visuals loft".
+- [ ] Titta på rummet och säg vad du vill ändra (möbler, färger, mer rekvisita). Vill du hellre ha en helt egen modell gäller fortfarande vägarna nedan.
+- [ ] Valfritt: bygga själv i Blender, beställa av en 3D-artist (skicka `BLENDER.md` + `docs/blender/ksv-studio-blockout.glb`) eller kombinera med köpta möbelpaket
 - [ ] **3–8 referensbilder** på studior/loft du gillar (ljus, material, möbler, färger)
 - [ ] Säg om **någon station ska bytas, flyttas eller tas bort** innan modelleringen börjar. Planlösningen ändras lättast nu.
 - [ ] **Logga** i SVG (till skyltar och neon-skylten i rummet)
