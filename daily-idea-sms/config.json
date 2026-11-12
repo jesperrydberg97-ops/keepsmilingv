@@ -1,0 +1,28 @@
+{
+  "language": "svenska",
+  "timezone": "Europe/Stockholm",
+  "send_hour": 7,
+  "max_sms_chars": 600,
+  "interests": [
+    "psykologi och beteende",
+    "produktivitet och vanor",
+    "privatekonomi och investeringar",
+    "historia",
+    "filosofi och stoicism",
+    "vetenskap och hjärnan",
+    "entreprenörskap",
+    "hälsa och sömn",
+    "kommunikation och relationer"
+  ],
+  "favorite_sources": [
+    "Atomic Habits – James Clear",
+    "The Psychology of Money – Morgan Housel",
+    "Thinking, Fast and Slow – Daniel Kahneman",
+    "Sapiens – Yuval Noah Harari",
+    "Meditationer – Marcus Aurelius",
+    "Deep Work – Cal Newport",
+    "Why We Sleep – Matthew Walker",
+    "Factfulness – Hans Rosling"
+  ],
+  "weekly_review_day": "sunday"
+}
