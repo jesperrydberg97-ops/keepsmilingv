@@ -106,5 +106,14 @@
     "takeaway": "Ställ en timer på 25 minuter för den uppgift du helst vill skjuta upp idag, och gör bara den tills det ringer.",
     "source": "The Pomodoro Technique – Francesco Cirillo",
     "topic": "produktivitet"
+  },
+  {
+    "date": "2026-11-24",
+    "kind": "new",
+    "title": "72-regeln",
+    "idea": "Dela 72 med din årliga avkastning i procent, så får du ungefär hur många år det tar för pengarna att fördubblas. Med 7 % tar det cirka 10 år, med 3 % cirka 24 år. Regeln beskrevs redan 1494 av den italienske matematikern Luca Pacioli, och den gör ränta-på-ränta lätt att räkna i huvudet. Den fungerar också åt andra hållet: med 2 % inflation halveras pengarnas köpkraft på ungefär 36 år.",
+    "takeaway": "Räkna ut med 72-regeln hur lång tid det tar att fördubbla ditt sparande med den avkastning du har idag.",
+    "source": "Summa de arithmetica (1494) – Luca Pacioli",
+    "topic": "ekonomi"
   }
 ]
