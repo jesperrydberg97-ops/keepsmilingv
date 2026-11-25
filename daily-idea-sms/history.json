@@ -115,5 +115,14 @@
     "takeaway": "Räkna ut med 72-regeln hur lång tid det tar att fördubbla ditt sparande med den avkastning du har idag.",
     "source": "Summa de arithmetica (1494) – Luca Pacioli",
     "topic": "ekonomi"
+  },
+  {
+    "date": "2026-11-25",
+    "kind": "new",
+    "title": "Kartan som stoppade koleran",
+    "idea": "Under kolerautbrottet i London 1854 trodde de flesta att sjukdomen spreds via dålig luft. Läkaren John Snow prickade i stället in dödsfallen på en karta och såg att de samlades kring en vattenpump på Broad Street. Han övertygade myndigheterna att ta bort pumpens handtag, och utbrottet ebbade ut. Han ställde frågan \"var händer det?\" och lät mönstret i datan avgöra, inte den rådande uppfattningen.",
+    "takeaway": "Har du ett återkommande problem? Skriv ner när och var det händer de närmaste dagarna och leta efter mönstret.",
+    "source": "The Ghost Map – Steven Johnson",
+    "topic": "historia"
   }
 ]
